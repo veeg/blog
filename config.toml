@@ -1,0 +1,22 @@
+# The URL the site will be built for
+base_url = "https://veeg.space"
+theme = "after-dark"
+
+compile_sass = true
+highlight_code = true
+build_search_index = false
+generate_feed = true
+
+taxonomies = [
+    { name = "tags", rss = true },
+]
+
+[extra]
+author = "Vegard Sandengen"
+github = "veeg"
+
+after_dark_menu = [
+    { url = "$BASE_URL", name = "Home" },
+    { url = "$BASE_URL/tags", name = "Tags" },
+]
+after_dark_title = "Veeg Space"
