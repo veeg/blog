@@ -70,7 +70,7 @@
     <div itemprop="articleBody">
       <p>This is an introductory post to <a href="https://crates.io/crates/dockertest">dockertest-rs</a>, a mechanism to control your dependencies in containers from an integration test environment, with Rust.</p>
 <span id="continue-reading"></span>
-<p>This project was born out of rather great frustration for the integration tests we where developing 
+<p>This project was born out of rather great frustration for the integration tests we were developing 
 for our API server. Nothing would be more apt than to have the full stack tested in some scenarios,
 but attempting to wrestle with the host environment both on your CI, as well as the local developers
 machine, soon turned foul.</p>
@@ -95,7 +95,7 @@ One may envision using the same image with different arguments, different volume
 wrapper to specify simple image from the docker repository name, through <a href="https://docs.rs/testcontainers/0.12.0/testcontainers/images/generic/struct.GenericImage.html">GenericImage</a>.</p>
 <p>Below is the hello-world test case using testcontainers, with the GenericImage abstraction.</p>
 <pre style="background-color:#2b303b;">
-<code><span style="color:#b48ead;">use </span><span style="color:#c0c5ce;">testcontainers::clients::Cli;
+<code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span style="color:#c0c5ce;">testcontainers::clients::Cli;
 </span><span style="color:#b48ead;">use </span><span style="color:#c0c5ce;">testcontainers::images::generic::GenericImage;
 </span><span style="color:#b48ead;">use </span><span style="color:#c0c5ce;">testcontainers::Docker;
 
@@ -130,7 +130,7 @@ the closures required for
 This creates the nice separation of the setup of the test with that of its test body.</li>
 </ul>
 <pre style="background-color:#2b303b;">
-<code><span style="color:#b48ead;">use </span><span style="color:#c0c5ce;">dockertest::{Composition, DockerTest};
+<code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span style="color:#c0c5ce;">dockertest::{Composition, DockerTest};
 
 #[</span><span style="color:#bf616a;">test</span><span style="color:#c0c5ce;">]
 </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">hello_world</span><span style="color:#c0c5ce;">() {
@@ -160,7 +160,7 @@ and <a href="https://docs.rs/dockertest/0.2.0/dockertest/waitfor/index.html">bat
 <p>The full powerfulness of these rather simple building blocks can be seen in one of the integration tests, where two communicating containers depend on each other, and where we expect some output
 from the containers in question.</p>
 <pre style="background-color:#2b303b;">
-<code><span style="color:#b48ead;">use </span><span style="color:#c0c5ce;">dockertest::waitfor::{MessageSource, MessageWait};
+<code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span style="color:#c0c5ce;">dockertest::waitfor::{MessageSource, MessageWait};
 </span><span style="color:#b48ead;">use </span><span style="color:#c0c5ce;">dockertest::{Composition, DockerTest, StartPolicy};
 
 #[</span><span style="color:#bf616a;">test</span><span style="color:#c0c5ce;">]
@@ -194,7 +194,7 @@ from the containers in question.</p>
     });
 }
 </span></code></pre>
-<p>Here we can see that the <em>coop_recv</em>_ image is started with a strict policy, such that
+<p>Here we can see that the <strong>coop_recv</strong> image is started with a strict policy, such that
 we know that this container has completed its wait for directive prior to the <strong>coop_send</strong> container is even created. Therefore, we do not have any race conditions for dependant operations
 between them.</p>
 <p>We can also observe that the <strong>coop_send</strong> composition is injected with an environment variable
