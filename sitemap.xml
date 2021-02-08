@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://veeg.space/</loc>
+    </url>
+    <url>
+        <loc>https://veeg.space/dockertest/</loc>
+    </url>
+    <url>
+        <loc>https://veeg.space/dockertest/introductory/</loc>
+        <lastmod>2021-01-25</lastmod>
+    </url>
+    <url>
+        <loc>https://veeg.space/page/1/</loc>
+    </url>
+    <url>
+        <loc>https://veeg.space/tags/</loc>
+    </url>
+    <url>
+        <loc>https://veeg.space/tags/dockertest/</loc>
+    </url>
+    <url>
+        <loc>https://veeg.space/tags/rust/</loc>
+    </url>
+</urlset>

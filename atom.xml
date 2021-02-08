@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title></title>
+	<link href="https://veeg.space/atom.xml" rel="self" type="application/atom+xml"/>
+	<link href="https://veeg.space"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2021-01-25T00:00:00+00:00</updated>
+	<id>https://veeg.space/atom.xml</id>
+	<entry xml:lang="en">
+		<title>An introduction to containerized integration tests - dockertest-rs</title>
+		<published>2021-01-25T00:00:00+00:00</published>
+		<updated>2021-01-25T00:00:00+00:00</updated>
+		<link href="https://veeg.space/dockertest/introductory/" type="text/html"/>
+		<id>https://veeg.space/dockertest/introductory/</id>
+		<content type="html">&lt;p&gt;This is an introductory post to &lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;dockertest&quot;&gt;dockertest-rs&lt;&#x2F;a&gt;, a mechanism to control your dependencies in containers from an integration test environment, with Rust.&lt;&#x2F;p&gt;
+&lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;
+&lt;p&gt;This project was born out of rather great frustration for the integration tests we where developing 
+for our API server. Nothing would be more apt than to have the full stack tested in some scenarios,
+but attempting to wrestle with the host environment both on your CI, as well as the local developers
+machine, soon turned foul.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;prior-art&quot;&gt;Prior art&lt;&#x2F;h2&gt;
+&lt;p&gt;Therefore, we started looking around for a solution to containerize
+this dependency, and control it solely from the test itself. After some various &lt;insert-search-engine-of-choice-here&gt; later, we dived particularly into these two:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;ory&#x2F;dockertest&quot;&gt;ory&#x2F;dockertest&lt;&#x2F;a&gt;: written in go. Seems rather popular and the only thing I could dig up around the search term &lt;code&gt;dockertest&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;testcontainers&quot;&gt;testcontainers&lt;&#x2F;a&gt;: a Rust fork of the Java library from &lt;a href=&quot;https:&#x2F;&#x2F;veeg.space&#x2F;dockertest&#x2F;introductory&#x2F;www.testcontainers.org&quot;&gt;testcontainers.org&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Initially, the API surface and grouping of operations seemed rather clunky from both options.
+There is no clearly defining scope for the body of the test.&lt;&#x2F;p&gt;
+&lt;p&gt;The ory alternative was never really an alternative, since it was not a Rust library and I for one would rather like to control everything from within the sheltered walls of Cargo.
+Therefore, I did investigate thoroughly how I could utilize testcontainers instead.&lt;&#x2F;p&gt;
+&lt;p&gt;To my dismay, I felt that there was a rather unpolished API surface and a bit too
+much boilerplate for my taste. The process of defining an
+&lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;testcontainers&#x2F;0.11.0&#x2F;testcontainers&#x2F;trait.Image.html&quot;&gt;Image&lt;&#x2F;a&gt; to utilize,
+and turning it into an Container, was nothing but confusing to me. It requires implementing
+the trait with a whole lot of associates types and required methods. It also muddies the waters
+between the fact that an image itself should not concern itself with the conditions for its container.
+One may envision using the same image with different arguments, different volumes, different environemnt variables. It just adds up in boilerplate. It does however provide a convenient
+wrapper to specify simple image from the docker repository name, through &lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;testcontainers&#x2F;0.12.0&#x2F;testcontainers&#x2F;images&#x2F;generic&#x2F;struct.GenericImage.html&quot;&gt;GenericImage&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Below is the hello-world test case using testcontainers, with the GenericImage abstraction.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;testcontainers::clients::Cli;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;testcontainers::images::generic::GenericImage;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;testcontainers::Docker;
+
+#[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;test&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;hello_world&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;() {
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; test = Cli::default();
+
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; image = GenericImage::new(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;hello-world&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;);
+
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; container = test.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;run&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(image);
+
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Test body is now running
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;An observation from this API design is that it does not allow for multiple containers in the
+same test environment. The &lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;testcontainers&#x2F;0.12.0&#x2F;testcontainers&#x2F;trait.Docker.html&quot;&gt;Docker&lt;&#x2F;a&gt; trait, fulfilled by &lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;testcontainers&#x2F;0.12.0&#x2F;testcontainers&#x2F;clients&#x2F;struct.Cli.html&quot;&gt;Cli&lt;&#x2F;a&gt;
+client used above, is structured to interact and control a single container. It does not aid
+with an environment where multiple containers may be present and have dependencies between them.
+If this is to be achieved, it is solely up to the user.&lt;&#x2F;p&gt;
+&lt;p&gt;But one point of inspiration was the mechanism around
+&lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;testcontainers&#x2F;0.11.0&#x2F;testcontainers&#x2F;trait.Image.html#tymethod.wait_until_ready&quot;&gt;wait_for_ready&lt;&#x2F;a&gt; method.
+It advertises itself as the 🍞 and butter of the whole testcontainer library, and I rather agree!
+It is an excellent idea for controlling separating the execution of the container from that of your
+test body.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;dockertest-rs&quot;&gt;dockertest-rs&lt;&#x2F;h2&gt;
+&lt;p&gt;The observations above paved way for the architecture of &lt;code&gt;dockertest-rs&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;dockertest&#x2F;0.1.2&#x2F;dockertest&#x2F;struct.DockerTest.html&quot;&gt;DockerTest&lt;&#x2F;a&gt;
+instance to control the execution of the test and its test body through
+the closures required for
+&lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;dockertest&#x2F;0.1.2&#x2F;dockertest&#x2F;struct.DockerTest.html#method.run&quot;&gt;run&lt;&#x2F;a&gt; and the async version &lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;dockertest&#x2F;0.1.2&#x2F;dockertest&#x2F;struct.DockerTest.html#method.run_async&quot;&gt;run_async&lt;&#x2F;a&gt;.
+This creates the nice separation of the setup of the test with that of its test body.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;dockertest::{Composition, DockerTest};
+
+#[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;test&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;hello_world&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;() {
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; test = DockerTest::new();
+
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; hello = Composition::with_repository(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;hello-world&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;);
+
+    test.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;add_composition&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(hello);
+
+    test.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;run&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;move &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;|_ops| async {
+        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Test body running here
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;});
+}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The intermediate step between an Image and the Container is represented by a
+&lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;dockertest&#x2F;0.1.2&#x2F;dockertest&#x2F;struct.Composition.html&quot;&gt;Composition&lt;&#x2F;a&gt;.
+It establishes the missing mental model to parameterize an image. It also assist with
+the order of how the container is started, and the conditions of readiness.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;It generalizes the readiness mechanism from testcontainers through a &lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;dockertest&#x2F;0.2.0&#x2F;dockertest&#x2F;waitfor&#x2F;trait.WaitFor.htm:&#x2F;&#x2F;docs.rs&#x2F;dockertest&#x2F;0.2.0&#x2F;dockertest&#x2F;waitfor&#x2F;trat.WaitFor.html&quot;&gt;WaitFor&lt;&#x2F;a&gt; trait
+and &lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;dockertest&#x2F;0.2.0&#x2F;dockertest&#x2F;waitfor&#x2F;index.html&quot;&gt;batteries included&lt;&#x2F;a&gt; implementations.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;The full powerfulness of these rather simple building blocks can be seen in one of the integration tests, where two communicating containers depend on each other, and where we expect some output
+from the containers in question.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;dockertest::waitfor::{MessageSource, MessageWait};
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;dockertest::{Composition, DockerTest, StartPolicy};
+
+#[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;test&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;test_inject_container_name_ip_through_env_communication&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;() {
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; test = DockerTest::new();
+
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; recv = Composition::with_repository(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;dockertest-rs&#x2F;coop_recv&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;)
+        .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;with_start_policy&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(StartPolicy::Strict)
+        .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;with_wait_for&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(Box::new(MessageWait {
+            message: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;recv started&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;to_string&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(),
+            source: MessageSource::Stdout,
+            timeout: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;,
+        }))
+        .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;with_container_name&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;recv&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;);
+    test.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;add_composition&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(recv);
+
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; send = Composition::with_repository(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;dockertest-rs&#x2F;coop_send&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;)
+        .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;with_start_policy&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(StartPolicy::Strict)
+        .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;with_wait_for&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(Box::new(MessageWait {
+            message: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;send success&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;to_string&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(),
+            source: MessageSource::Stdout,
+            timeout: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;60&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;,
+        }));
+    send.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;inject_container_name&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;recv&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;SEND_TO_IP&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;);
+    test.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;add_composition&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(send);
+
+    test.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;run&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(|&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ops&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;| async &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;move &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;{
+        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; recv = ops.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;handle&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;recv&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;);
+        recv.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;assert_message&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;coop send message to container&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;, MessageSource::Stdout, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;)
+            .await;
+    });
+}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Here we can see that the &lt;em&gt;coop_recv&lt;&#x2F;em&gt;_ image is started with a strict policy, such that
+we know that this container has completed its wait for directive prior to the &lt;strong&gt;coop_send&lt;&#x2F;strong&gt; container is even created. Therefore, we do not have any race conditions for dependant operations
+between them.&lt;&#x2F;p&gt;
+&lt;p&gt;We can also observe that the &lt;strong&gt;coop_send&lt;&#x2F;strong&gt; composition is injected with an environment variable
+that contains the container name of &lt;strong&gt;coop_recv&lt;&#x2F;strong&gt;, such that it can communicate with it.
+This is done by using the &lt;code&gt;container_name&lt;&#x2F;code&gt; (referred to as a handle) of the composition.
+The container name can be set manually for each composition, but defaults to the repository name.
+This allows the test writer to consistently interact with the containers that is part of the test.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;future-work&quot;&gt;Future work&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;strong&gt;dockertest-rs&lt;&#x2F;strong&gt; is still in an active development mode. There are multiple areas of improvement
+that has not gotten any attention. Some areas are:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Proper Windows &amp;amp; Mac support. We have no active testing for these platforms, and the docker
+networks interfaces does not work similarly across platforms. Therefore, not all functionality
+will perform correctly on non-linux platforms.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Private docker registries. We have abstracted the &lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;dockertest&#x2F;0.2.0&#x2F;dockertest&#x2F;enum.Source.html&quot;&gt;Source&lt;&#x2F;a&gt; of an image, but the &lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;dockertest&#x2F;0.2.0&#x2F;dockertest&#x2F;struct.Remote.html&quot;&gt;Remote&lt;&#x2F;a&gt; variant is not implemented.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Figuring out the best methods of providing container-container and host-container communication,
+related to both network and volume support, for both when dockertest itself runs on host or in a docker-in-docker container itself. We have preliminary support through an environment variable
+&lt;code&gt;DOCKERTEST_CONTAINER_ID_INJECT_TO_NETWORK=your_container_id&#x2F;name&lt;&#x2F;code&gt; set on the dockertest executable.
+But this is an area where all use-cases must be documented, mapped, and reasoned about to
+find the ideal interfaces to support all these cases.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h2&gt;
+&lt;p&gt;As of now, I see &lt;strong&gt;dockertest-rs&lt;&#x2F;strong&gt; as an exciting tool for various integration tests, highly suitable
+for full-fledged API server tests with auxiliary dependencies such as a database.
+It is definitely at a useable stage where I hope more projects can get mileage out of this project,
+and hopefully it can organically evolve. There are many opportunities to contribute and shape
+the direction of this project, supporting even more use-cases out of the box.
+In truth, it would be cool to investigate routes
+of deployments in other environments as well. We might need a name-change for that tho :)&lt;&#x2F;p&gt;
+&lt;p&gt;For now, I hope this is a useful project for more than just me!&lt;&#x2F;p&gt;
+</content>
+	</entry>
+</feed>

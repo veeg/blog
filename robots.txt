@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://veeg.space/sitemap.xml
