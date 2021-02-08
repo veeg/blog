@@ -29,4 +29,4 @@ jobs:
           git add .
 
           git commit -m "Automatic deploy"
-          git push --force "https://${{ secrets.TOKEN }]@github.com/veeg/blog.git" master:gh-pages
+          git push --force "https://${{ secrets.TOKEN }}@github.com/veeg/blog.git" master:gh-pages
