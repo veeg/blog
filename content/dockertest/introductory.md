@@ -10,7 +10,7 @@ This is an introductory post to [dockertest-rs](https://crates.io/crates/dockert
 
 <!-- more -->
 
-This project was born out of rather great frustration for the integration tests we where developing 
+This project was born out of rather great frustration for the integration tests we were developing 
 for our API server. Nothing would be more apt than to have the full stack tested in some scenarios,
 but attempting to wrestle with the host environment both on your CI, as well as the local developers
 machine, soon turned foul.
@@ -143,7 +143,7 @@ fn test_inject_container_name_ip_through_env_communication() {
 }
 ```
 
-Here we can see that the _coop_recv__ image is started with a strict policy, such that
+Here we can see that the __coop_recv__ image is started with a strict policy, such that
 we know that this container has completed its wait for directive prior to the __coop_send__ container is even created. Therefore, we do not have any race conditions for dependant operations
 between them.
 
