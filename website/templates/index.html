@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% set posts = section.pages %}
+{% if posts %}
+  {% set latest = posts[0] %}
+  <article class="featured">
+    <p class="label">Latest</p>
+    <h1><a href="{{ latest.permalink }}">{{ latest.title }}</a></h1>
+    <p class="meta">
+      <time datetime="{{ latest.date }}">{{ latest.date | date(format="%B %-d, %Y") }}</time>
+      · {{ latest.reading_time }} min read
+    </p>
+    {% if latest.summary %}
+      <div class="summary">{{ latest.summary | safe }}</div>
+    {% endif %}
+    <p class="meta"><a href="{{ latest.permalink }}">Continue reading →</a></p>
+  </article>
+
+  {% if posts | length > 1 %}
+  <section class="archive">
+    <h2 class="label">Earlier</h2>
+    <ol>
+      {% for post in posts[1:] %}
+      <li>
+        <time datetime="{{ post.date }}">{{ post.date | date(format="%Y-%m") }}</time>
+        <a href="{{ post.permalink }}">{{ post.title }}</a>
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+  {% endif %}
+{% else %}
+  <p>No posts yet.</p>
+{% endif %}
+{% endblock %}

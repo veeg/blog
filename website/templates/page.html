@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} · {{ config.title }}{% endblock %}
+
+{% block content %}
+<div class="post-layout">
+  <article class="post">
+    <header>
+      <h1>{{ page.title }}</h1>
+      <p class="meta">
+        <time datetime="{{ page.date }}">{{ page.date | date(format="%B %-d, %Y") }}</time>
+        · {{ page.reading_time }} min read
+      </p>
+    </header>
+
+    <div class="prose">
+      {{ page.content | safe }}
+    </div>
+
+    {# With sort_by = "date", Zola's `higher` is the older post and `lower` the newer one. #}
+    {% if page.lower or page.higher %}
+    <nav class="post-nav" aria-label="More posts">
+      {% if page.higher %}<a class="older" href="{{ page.higher.permalink }}">← {{ page.higher.title }}</a>{% endif %}
+      {% if page.lower %}<a class="newer" href="{{ page.lower.permalink }}">{{ page.lower.title }} →</a>{% endif %}
+    </nav>
+    {% endif %}
+  </article>
+
+  {% if page.toc | length >= 2 %}
+  <nav class="toc" aria-label="Contents">
+    <p class="label">Contents</p>
+    <ol>
+      {% for h2 in page.toc %}
+      <li>
+        <a href="#{{ h2.id }}">{{ h2.title }}</a>
+        {% if h2.children %}
+        <ol>
+          {% for h3 in h2.children %}
+          <li><a href="#{{ h3.id }}">{{ h3.title }}</a></li>
+          {% endfor %}
+        </ol>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+  </nav>
+  {% endif %}
+</div>
+{% endblock %}

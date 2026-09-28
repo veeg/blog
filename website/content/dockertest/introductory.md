@@ -1,9 +1,6 @@
 +++
 title = "An introduction to containerized integration tests - dockertest-rs"
 date = 2021-01-25
-
-[taxonomies]
-tags = ["dockertest", "rust"]
 +++
 
 This is an introductory post to [dockertest-rs](https://crates.io/crates/dockertest), a mechanism to control your dependencies in containers from an integration test environment, with Rust.

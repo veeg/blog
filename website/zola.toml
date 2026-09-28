@@ -1,0 +1,19 @@
+# The URL the site will be built for
+base_url = "https://veeg.dev"
+title = "Veeg Blog"
+
+compile_sass = false
+build_search_index = false
+generate_feeds = false
+
+[markdown]
+insert_anchor_links = "left"
+
+[markdown.highlighting]
+dark_theme = "kanagawa-wave"
+light_theme = "github-light-high-contrast"
+error_on_missing_language = true
+
+[extra]
+author = "Vegard Sandengen"
+github = "veeg"
