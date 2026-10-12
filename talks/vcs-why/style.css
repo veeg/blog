@@ -1,0 +1,113 @@
+/* ---------- Theme ----------
+ * The blog's light palette (website/static/style.css), so the deck matches the site
+ * and the diagrams, which are drawn for the same cream background. */
+:root {
+  --vcs-bg: #fbf8f1;
+  --vcs-surface: #f1ece1;
+  --vcs-border: #e4ddcf;
+  --vcs-text: #2a2723;
+  --vcs-heading: #15130f;
+  --vcs-muted: #6f6a62;
+  --vcs-accent: #1d6f66;
+  --vcs-accent-soft: #dcefeb;
+  --vcs-green: #0b7a0b;
+}
+
+.slidev-layout {
+  --slidev-code-background: var(--vcs-surface);
+  --slidev-code-font-size: 16px;
+  --slidev-code-line-height: 1.6;
+  background: var(--vcs-bg);
+  color: var(--vcs-text);
+}
+.slidev-layout h1,
+.slidev-layout h2,
+.slidev-layout h3 { color: var(--vcs-heading); }
+.slidev-layout a { color: var(--vcs-accent); border-color: currentColor; }
+.slidev-layout :not(pre) > code {
+  background: var(--vcs-accent-soft);
+  color: var(--vcs-accent);
+}
+/* Headings that are just a command keep the heading colour. */
+.slidev-layout h1 > code { color: inherit; }
+.slidev-layout .green { color: var(--vcs-green); }
+
+/* A short accent rule under every slide title. */
+.slidev-layout.default h1::after,
+.slidev-layout.center h1::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 4px;
+  margin-top: 0.5rem;
+  border-radius: 2px;
+  background: var(--vcs-accent);
+}
+.slidev-layout.center h1 { font-size: 3rem; line-height: 1.2; }
+.slidev-layout.center h1::after { margin-inline: auto; margin-top: 1.2rem; }
+
+/* The slides hold only a few words each, so they can afford to be big. */
+.slidev-layout ul,
+.slidev-layout ol {
+  font-size: 1.5rem;
+  line-height: 2.4rem;
+}
+.slidev-layout li::marker { color: var(--vcs-accent); font-weight: 700; }
+
+/* Cover and section slides carry a small commit graph along the bottom, in the
+ * style of the diagrams: trunk with a branch that merges back. */
+/* !important: the cover layout sets its own background size and position inline. */
+.slidev-layout.cover,
+.slidev-layout.section {
+  background-repeat: no-repeat;
+  background-position: center bottom 3rem !important;
+  background-size: 100% auto !important;
+}
+.slidev-layout.cover {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 980 90'%3E%3Cg fill='none' stroke-width='4' stroke-linecap='round'%3E%3Cpath d='M0 70H980' stroke='%231d6f66'/%3E%3Cpath d='M340 70C380 70 380 25 420 25H560C600 25 600 70 640 70' stroke='%23c2410c'/%3E%3C/g%3E%3Cg fill='%23fbf8f1' stroke-width='4'%3E%3Cg stroke='%231d6f66'%3E%3Ccircle cx='200' cy='70' r='11'/%3E%3Ccircle cx='340' cy='70' r='11'/%3E%3Ccircle cx='480' cy='70' r='11'/%3E%3Ccircle cx='640' cy='70' r='11'/%3E%3Ccircle cx='780' cy='70' r='11'/%3E%3C/g%3E%3Cg stroke='%23c2410c'%3E%3Ccircle cx='450' cy='25' r='11'/%3E%3Ccircle cx='540' cy='25' r='11'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.slidev-layout.cover h1 { color: var(--vcs-heading); }
+.slidev-layout.cover h1 + p { color: var(--vcs-accent); opacity: 1; font-size: 1.5rem; }
+
+/* Section slides: full teal, so the talk's chapters stand out. */
+.slidev-layout.section {
+  background-color: var(--vcs-accent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 980 90'%3E%3Cg fill='none' stroke='%23fbf8f1' stroke-opacity='.45' stroke-width='4' stroke-linecap='round'%3E%3Cpath d='M0 70H980'/%3E%3Cpath d='M340 70C380 70 380 25 420 25H560C600 25 600 70 640 70'/%3E%3C/g%3E%3Cg fill='%231d6f66' stroke='%23fbf8f1' stroke-opacity='.45' stroke-width='4'%3E%3Ccircle cx='200' cy='70' r='11'/%3E%3Ccircle cx='340' cy='70' r='11'/%3E%3Ccircle cx='480' cy='70' r='11'/%3E%3Ccircle cx='640' cy='70' r='11'/%3E%3Ccircle cx='780' cy='70' r='11'/%3E%3Ccircle cx='450' cy='25' r='11'/%3E%3Ccircle cx='540' cy='25' r='11'/%3E%3C/g%3E%3C/svg%3E");
+}
+.slidev-layout.section h1 { color: var(--vcs-bg); font-weight: 600; }
+
+/* Quotes: a large accent quotation mark, and a muted attribution. */
+.slidev-layout.quote h1 { font-size: 2.6rem; line-height: 1.25; }
+.slidev-layout.quote h1::before {
+  content: "“";
+  display: block;
+  height: 3.2rem;
+  color: var(--vcs-accent);
+  font-family: Georgia, serif;
+  font-size: 7rem;
+  line-height: 1;
+}
+.slidev-layout.quote h1 + p { color: var(--vcs-muted); opacity: 1; font-size: 1.1rem; }
+.slidev-layout.quote h1 + p::before { content: "— "; color: var(--vcs-accent); }
+
+/* The diagrams carry their own dark mode, which follows the OS setting. The deck is
+ * always light, so keep them light too. */
+.slidev-layout img {
+  color-scheme: light;
+}
+
+/* Presenter view: the notes carry most of the talk, so give them room. These are
+ * floors on Slidev's draggable sizes, so dragging the panels larger still works.
+ * The doubled class outranks the presenter page's scoped styles. */
+@media (min-aspect-ratio: 1/1) {
+  .slidev-presenter .grid-container.grid-container.layout1 {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) max(var(--slidev-presenter-notes-width), 36vw);
+    grid-template-rows: minmax(0, 1fr) minmax(0, max(var(--slidev-presenter-notes-row-size), 62vh)) min-content;
+  }
+}
+@media (min-aspect-ratio: 3/5) and (max-aspect-ratio: 1/1) {
+  .slidev-presenter .grid-container.grid-container.layout1 {
+    grid-template-columns: max(var(--slidev-presenter-notes-width), 50vw) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 2fr) minmax(0, max(var(--slidev-presenter-notes-row-size), 45vh)) min-content;
+  }
+}

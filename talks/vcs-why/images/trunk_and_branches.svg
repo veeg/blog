@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 420" width="480" height="420" role="img" aria-labelledby="title desc">
+  <title id="title">Trunk and branches</title>
+  <desc id="desc">A tree whose trunk is a line of commits growing upward from the root, with branches of commits growing out of it to the sides.</desc>
+  <style>
+    text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 15px; font-weight: 600; }
+    .ground { stroke: #6f6a62; }
+    .root { stroke: #6f6a62; fill: none; stroke-linecap: round; }
+    .trunk { fill: #1d6f66; }
+    .branch { stroke: #c2410c; fill: none; stroke-linecap: round; }
+    .leaf { fill: #1d6f66; opacity: 0.3; }
+    .commit { fill: #fbf8f1; stroke-width: 3; }
+    .on-trunk { stroke: #1d6f66; }
+    .on-branch { stroke: #c2410c; }
+    .t-trunk { fill: #1d6f66; }
+    .t-branch { fill: #c2410c; }
+    @media (prefers-color-scheme: dark) {
+      .ground, .root { stroke: #8d8a83; }
+      .trunk, .leaf { fill: #6fc2b8; }
+      .branch { stroke: #fb923c; }
+      .commit { fill: #121417; }
+      .on-trunk { stroke: #6fc2b8; }
+      .on-branch { stroke: #fb923c; }
+      .t-trunk { fill: #6fc2b8; }
+      .t-branch { fill: #fb923c; }
+    }
+  </style>
+
+  <!-- Roots -->
+  <path class="root" stroke-width="4" d="M236 362 C226 382, 200 392, 172 398"/>
+  <path class="root" stroke-width="4" d="M244 362 C254 384, 282 390, 312 400"/>
+  <path class="root" stroke-width="3" d="M240 364 C240 384, 236 398, 230 410"/>
+  <line class="ground" x1="110" y1="362" x2="370" y2="362" stroke-width="1.5" stroke-dasharray="4 5"/>
+
+  <!-- Leaves at the branch tips -->
+  <g class="leaf">
+    <ellipse cx="96" cy="128" rx="16" ry="8" transform="rotate(-35 96 128)"/>
+    <ellipse cx="84" cy="150" rx="14" ry="7" transform="rotate(20 84 150)"/>
+    <ellipse cx="130" cy="58" rx="15" ry="7" transform="rotate(-70 130 58)"/>
+    <ellipse cx="112" cy="70" rx="13" ry="6" transform="rotate(-20 112 70)"/>
+    <ellipse cx="392" cy="96" rx="16" ry="8" transform="rotate(30 392 96)"/>
+    <ellipse cx="384" cy="70" rx="14" ry="7" transform="rotate(-40 384 70)"/>
+    <ellipse cx="240" cy="22" rx="15" ry="7" transform="rotate(-90 240 22)"/>
+    <ellipse cx="258" cy="34" rx="13" ry="6" transform="rotate(-30 258 34)"/>
+    <ellipse cx="222" cy="34" rx="13" ry="6" transform="rotate(30 222 34)"/>
+  </g>
+
+  <!-- Branches -->
+  <path class="branch" stroke-width="6" d="M238 262 C200 240, 150 200, 108 140"/>
+  <path class="branch" stroke-width="4" d="M176 212 C160 170, 150 120, 130 76"/>
+  <path class="branch" stroke-width="6" d="M242 196 C290 170, 340 140, 378 98"/>
+
+  <!-- Trunk -->
+  <path class="trunk" d="M222 364 C230 300, 233 200, 236 46 L244 46 C247 200, 250 300, 258 364 Z"/>
+
+  <!-- Commits -->
+  <g class="commit on-trunk">
+    <circle cx="240" cy="320" r="8"/>
+    <circle cx="240" cy="262" r="8"/>
+    <circle cx="240" cy="196" r="8"/>
+    <circle cx="240" cy="128" r="8"/>
+    <circle cx="240" cy="58" r="8"/>
+  </g>
+  <g class="commit on-branch">
+    <circle cx="176" cy="212" r="7"/>
+    <circle cx="108" cy="140" r="7"/>
+    <circle cx="146" cy="120" r="6"/>
+    <circle cx="130" cy="76" r="6"/>
+    <circle cx="312" cy="154" r="7"/>
+    <circle cx="378" cy="98" r="7"/>
+  </g>
+
+  <!-- Labels -->
+  <text x="262" y="300" class="t-trunk">trunk</text>
+  <text x="318" y="188" class="t-branch">branch</text>
+  <text x="56" y="208" class="t-branch">branch</text>
+</svg>

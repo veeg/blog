@@ -1,0 +1,16 @@
+{
+  "name": "talks",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev --open",
+    "export": "slidev export",
+    "index": "node publish.mjs index",
+    "build": "node publish.mjs slides index"
+  },
+  "dependencies": {
+    "@slidev/cli": "^52.0.0",
+    "@slidev/theme-default": "latest",
+    "yaml": "^2.9.1"
+  }
+}
