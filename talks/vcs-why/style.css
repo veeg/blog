@@ -11,6 +11,7 @@
   --vcs-accent: #1d6f66;
   --vcs-accent-soft: #dcefeb;
   --vcs-green: #0b7a0b;
+  --vcs-hot: #c2410c;
 }
 
 .slidev-layout {
@@ -42,6 +43,11 @@
   margin-top: 0.5rem;
   border-radius: 2px;
   background: var(--vcs-accent);
+}
+/* Hot tip slides (<HotTip />): the rule turns orange and longer, once the sticker shows. */
+.slidev-layout.default:has(.hot-tip):not(:has(.slidev-vclick-hidden .hot-tip)) h1::after {
+  width: 6rem;
+  background: linear-gradient(90deg, var(--vcs-hot), #f59e0b);
 }
 .slidev-layout.center h1 { font-size: 3rem; line-height: 1.2; }
 .slidev-layout.center h1::after { margin-inline: auto; margin-top: 1.2rem; }
@@ -110,4 +116,25 @@
     grid-template-columns: max(var(--slidev-presenter-notes-width), 50vw) minmax(0, 1fr);
     grid-template-rows: minmax(0, 2fr) minmax(0, max(var(--slidev-presenter-notes-row-size), 45vh)) min-content;
   }
+}
+
+/* A few words of context under a bullet: `- Bullet <span class="hint">context</span>`. */
+.slidev-layout li .hint {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--vcs-muted);
+  font-size: 1.15rem;
+  line-height: 1.5rem;
+}
+
+/* Small print source reference along the bottom: `<div class="source">…</div>`.
+ * Bottom left, clear of the slide number on the right. */
+.slidev-layout .source {
+  position: absolute;
+  bottom: 1rem;
+  left: 3.5rem;
+  right: 8rem;
+  color: var(--vcs-muted);
+  font-size: 0.75rem;
+  line-height: 1rem;
 }

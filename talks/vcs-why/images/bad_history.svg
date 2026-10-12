@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 870 450" width="870" height="450">
+<rect width="870" height="450" rx="10" fill="#1f2329"/>
+<path d="M0 10a10 10 0 0 1 10-10h850a10 10 0 0 1 10 10v22h-870z" fill="#2c313a"/>
+<circle cx="20" cy="16.0" r="6" fill="#ff5f57"/>
+<circle cx="40" cy="16.0" r="6" fill="#febc2e"/>
+<circle cx="60" cy="16.0" r="6" fill="#28c840"/>
+<text x="435.0" y="21.0" text-anchor="middle" fill="#7f848e" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">~/project</text>
+<g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" xml:space="preserve">
+<text x="22" y="68"><tspan fill="#7f848e">$ </tspan><tspan fill="#d7dae0">git ol</tspan></text>
+<text x="22" y="90"><tspan fill="#e06c75">3f9c2e1</tspan><tspan fill="#d7dae0"> -</tspan><tspan fill="#e5c07b"> (HEAD -&gt; feature/chat-ui, origin/feature/chat-ui)</tspan><tspan fill="#d7dae0"> fix </tspan><tspan fill="#98c379">(2 hours ago)</tspan> <tspan fill="#61afef" font-weight="700">&lt;Vegard Sandengen&gt;</tspan></text>
+<text x="22" y="112"><tspan fill="#e06c75">b71d0a4</tspan><tspan fill="#d7dae0"> -</tspan><tspan fill="#d7dae0"> fix again </tspan><tspan fill="#98c379">(3 hours ago)</tspan> <tspan fill="#61afef" font-weight="700">&lt;Vegard Sandengen&gt;</tspan></text>
+<text x="22" y="134"><tspan fill="#e06c75">9e4a6c2</tspan><tspan fill="#d7dae0"> -</tspan><tspan fill="#d7dae0"> wip </tspan><tspan fill="#98c379">(5 hours ago)</tspan> <tspan fill="#61afef" font-weight="700">&lt;Vegard Sandengen&gt;</tspan></text>
+<text x="22" y="156"><tspan fill="#e06c75">0c8f3b7</tspan><tspan fill="#d7dae0"> -</tspan><tspan fill="#d7dae0"> fixes </tspan><tspan fill="#98c379">(21 hours ago)</tspan> <tspan fill="#61afef" font-weight="700">&lt;Vegard Sandengen&gt;</tspan></text>
+<text x="22" y="178"><tspan fill="#e06c75">e2a91d5</tspan><tspan fill="#d7dae0"> -</tspan><tspan fill="#d7dae0"> Merge branch &#x27;main&#x27; into feature/chat-ui </tspan><tspan fill="#98c379">(26 hours ago)</tspan> <tspan fill="#61afef" font-weight="700">&lt;Vegard Sandengen&gt;</tspan></text>
+<text x="22" y="200"><tspan fill="#e06c75">5d7b3e8</tspan><tspan fill="#d7dae0"> -</tspan><tspan fill="#d7dae0"> add </tspan><tspan fill="#98c379">(2 days ago)</tspan> <tspan fill="#61afef" font-weight="700">&lt;Vegard Sandengen&gt;</tspan></text>
+<text x="22" y="222"><tspan fill="#e06c75">a46f0c9</tspan><tspan fill="#d7dae0"> -</tspan><tspan fill="#d7dae0"> asdf </tspan><tspan fill="#98c379">(2 days ago)</tspan> <tspan fill="#61afef" font-weight="700">&lt;Vegard Sandengen&gt;</tspan></text>
+<text x="22" y="244"><tspan fill="#e06c75">7c1e8d2</tspan><tspan fill="#d7dae0"> -</tspan><tspan fill="#d7dae0"> fix tests </tspan><tspan fill="#98c379">(3 days ago)</tspan> <tspan fill="#61afef" font-weight="700">&lt;Vegard Sandengen&gt;</tspan></text>
+<text x="22" y="266"><tspan fill="#e06c75">62b9f14</tspan><tspan fill="#d7dae0"> -</tspan><tspan fill="#d7dae0"> wip </tspan><tspan fill="#98c379">(3 days ago)</tspan> <tspan fill="#61afef" font-weight="700">&lt;Vegard Sandengen&gt;</tspan></text>
+<text x="22" y="288"><tspan fill="#e06c75">f03a7e6</tspan><tspan fill="#d7dae0"> -</tspan><tspan fill="#d7dae0"> add stuff </tspan><tspan fill="#98c379">(4 days ago)</tspan> <tspan fill="#61afef" font-weight="700">&lt;Vegard Sandengen&gt;</tspan></text>
+<text x="22" y="310"><tspan fill="#e06c75">8b2d5c0</tspan><tspan fill="#d7dae0"> -</tspan><tspan fill="#d7dae0"> fix </tspan><tspan fill="#98c379">(4 days ago)</tspan> <tspan fill="#61afef" font-weight="700">&lt;Vegard Sandengen&gt;</tspan></text>
+<text x="22" y="332"><tspan fill="#e06c75">d95e1a3</tspan><tspan fill="#d7dae0"> -</tspan><tspan fill="#d7dae0"> Revert &quot;fix&quot; </tspan><tspan fill="#98c379">(5 days ago)</tspan> <tspan fill="#61afef" font-weight="700">&lt;Vegard Sandengen&gt;</tspan></text>
+<text x="22" y="354"><tspan fill="#e06c75">1a7f4b9</tspan><tspan fill="#d7dae0"> -</tspan><tspan fill="#d7dae0"> fix </tspan><tspan fill="#98c379">(5 days ago)</tspan> <tspan fill="#61afef" font-weight="700">&lt;Vegard Sandengen&gt;</tspan></text>
+<text x="22" y="376"><tspan fill="#e06c75">c48e2d6</tspan><tspan fill="#d7dae0"> -</tspan><tspan fill="#d7dae0"> WIP do not merge </tspan><tspan fill="#98c379">(6 days ago)</tspan> <tspan fill="#61afef" font-weight="700">&lt;Vegard Sandengen&gt;</tspan></text>
+<text x="22" y="398"><tspan fill="#e06c75">4e6a9c3</tspan><tspan fill="#d7dae0"> -</tspan><tspan fill="#d7dae0"> add </tspan><tspan fill="#98c379">(7 days ago)</tspan> <tspan fill="#61afef" font-weight="700">&lt;Vegard Sandengen&gt;</tspan></text>
+<text x="22" y="420"><tspan fill="#e06c75">2b8d7f1</tspan><tspan fill="#d7dae0"> -</tspan><tspan fill="#e5c07b"> (origin/main, main)</tspan><tspan fill="#d7dae0"> Add health check endpoint </tspan><tspan fill="#98c379">(8 days ago)</tspan> <tspan fill="#61afef" font-weight="700">&lt;Vegard Sandengen&gt;</tspan></text>
+</g>
+</svg>

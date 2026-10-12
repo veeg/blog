@@ -19,11 +19,23 @@ layout: cover
 Why We do What We Do
 
 <div class="pt-8 opacity-60">{{ new Date($slidev.configs.date).toLocaleDateString('en-US', { dateStyle: 'long', timeZone: 'UTC' }) }}</div>
+<div class="opacity-60">Vegard Sandengen</div>
 
 <!--
 An opinionated walk through of version control systems, and how to use them.
 Mostly Git, with some honorable mentions on how we got to today's workflow, and where it might go next.
+
+- Last time in StoreAud - advanced distributed systems - 2014.
 -->
+
+---
+
+# About Me
+
+- Graduated from UiT with Masters' in 2015
+- Worked for the majority of my career in the space industry
+  - Currently at Kongsberg Satellite Services
+- Rustacean
 
 ---
 layout: section
@@ -54,10 +66,13 @@ To change a file, you lock it. Nobody else touches it until you're done. A coord
 
 [click] CVS started as scripts on top of RCS, and dropped the locking. Everyone edits their own copy; conflicts merged on check-in. Mid-90s it got client-server support: share a server, not a machine.
 Subversion set out to be a better CVS. Same model. Still widely used in enterprise.
-Microsoft's Team Foundation Server: server workspaces (read-only until checked out, lockable — the old days) and local workspaces (CVS style).
-All of these are centralized: one server holds the one true history. You need it to commit, branch, even read the log.
 
-[click] Distributed VCS existed in the 90s (Sun's TeamWare), but caught on after 2000. BitKeeper, by Larry McVoy (who also designed TeamWare), mattered because the Linux kernel used it 2002–2005.
+Microsoft's Team Foundation Server: server workspaces (read-only until checked out, lockable — the old days)
+and local workspaces (CVS style).
+
+All of these are centralized: one server holds the one true history. You need it to commit, branch and resolve conflicts.
+
+[click] Distributed VCS existed in already in the 90s (Sun's TeamWare), but caught on after 2000. BitKeeper, by Larry McVoy (who also designed TeamWare), mattered because the Linux kernel used it 2002–2005.
 The free license was revoked...
 
 [click] ...and multiple alternatives were built at the same time. Mercurial is still around. Git won the adoption race.
@@ -97,16 +112,16 @@ By 2011 GitHub had passed SourceForge and Google Code in activity.
 
 <v-clicks>
 
-- 2010: SVN support
-- 2024: SVN sunset
-- 225M developers · 800M repos · 90% of Fortune 100
+- 2010: SVN support <span class="hint">yes, a Git host serving Subversion</span>
+- 2024: SVN sunset <span class="hint">fourteen years later</span>
+- 225M developers · 800M repos · 90% of Fortune 100 <span class="hint">a new developer every second</span>
 
 </v-clicks>
 
 <!--
 GitHub is the de facto open source hub. It dethroned SourceForge before there were alternatives.
 
-[click] Fun fact: in its quest for mainstream adoption, GitHub announced Subversion support in 2010. (github.blog/2010-04-01-announcing-svn-support — yes, April 1st, but it was real.)
+[click] Fun fact: in its quest for mainstream adoption, GitHub announced Subversion support on April 1. 2010. (github.blog/2010-04-01-announcing-svn-support — yes, April 1st, but it was real.)
 
 [click] Sunset in 2024.
 
@@ -127,6 +142,7 @@ Mid 2018. Scarred developers remembered 1990s Microsoft: "embrace, extend, extin
 By the end of the following week, over 50,000 projects had moved.
 
 [click] Sounds like an exodus. But GitHub hosted 85 million repositories. 0.06%. It never registered on the Richter scale.
+
 -->
 
 ---
@@ -138,7 +154,9 @@ By the end of the following week, over 50,000 projects had moved.
 <!--
 Even if the exodus crowd was tiny, they might have been on to something. When Big Tech enters the picture, things get shaken up.
 Historic uptime graph, built solely from GitHub's own status page (damrnelson.github.io/github-historical-uptime).
+
 Caveat: the further back we look, the more incomplete the data may be.
+
 -->
 
 ---
@@ -173,10 +191,10 @@ layout: section
 
 <v-clicks>
 
-- 1975: "delta chain" (Rochkind)
-- 1977: "trunk" & "branch" (SCCS/PWB manual)
-- 1985: RCS: "A young revision tree is slender"
-- 2020: `init.defaultBranch`
+- 1975: "delta chain" (Rochkind) <span class="hint">the first SCCS paper: no branches yet</span>
+- 1977: "trunk" & "branch" (SCCS/PWB manual) <span class="hint">deltas as the nodes of a tree</span>
+- 1985: RCS: "A young revision tree is slender" <span class="hint">one branch, called the trunk</span>
+- 2020: `init.defaultBranch` <span class="hint">master, main or trunk: your call</span>
 
 </v-clicks>
 
@@ -186,9 +204,9 @@ Where do "branch" and "trunk" come from?
 [click] The original SCCS paper by Marc Rochkind, 1975, talks about "delta chains". No branches.
 
 [click] The SCCS/PWB User's Manual, Bell Labs 1977, on SCCS v4: "It is convenient to conceive of the deltas applied to an SCCS file as the nodes of a tree... Such a structure may be termed the 'trunk'... there are situations in which it is necessary to cause a branching in the tree."
-So the terms came from SCCS, after the first release.
+So the terms came from SCCS, after Rochkinds paper announcing SCCS to the wider world, and v4 that are are referencing here..
 
-[click] Tichy's RCS paper, 1985: "A young revision tree is slender: It consists of only one branch, called the trunk. As the tree ages, side branches may form."
+[click] Walter F. Tichy's RCS paper, 1985: "A young revision tree is slender: It consists of only one branch, called the trunk. As the tree ages, side branches may form."
 CVS and Subversion took it from there. Mercurial went with "default". Git with "master".
 
 [click] Git 2.28, 2020, added init.defaultBranch. The default hasn't changed yet, but your config may have.
@@ -215,11 +233,17 @@ class: text-center
 
 # Learn the CLI
 
+<HotTip label="" />
+
 <!--
+Hot tip for you
+
 Before we get into the how: invest the time to learn Git on the command line.
 I have never really met a GUI-only Git user with a thorough grasp of how Git works.
 They are often unable to make the adjustments needed to follow the team's development guidelines: rebasing, splitting commits, fixing up history.
-The GUI is fine for looking. The CLI is where you learn the model.
+
+The GUI is fine for simple tasks. The CLI is where you learn the model.
+
 Everything in the rest of this talk is a CLI command.
 -->
 
@@ -234,10 +258,10 @@ Everything in the rest of this talk is a CLI command.
 
 <v-clicks>
 
-- Branch per Task
-- Codeline per Release
-- Mainline
-- Merge Early and Often
+- Branch per Task <span class="hint">every change on its own branch</span>
+- Codeline per Release <span class="hint">one line per supported version</span>
+- Mainline <span class="hint">the line everything returns to</span>
+- Merge Early and Often <span class="hint">self-explanatory</span>
 
 </v-clicks>
 </div>
@@ -247,18 +271,22 @@ Everything in the rest of this talk is a CLI command.
 
 <v-clicks>
 
-- Merge-a-phobia
-- Branch-a-holic
-- Spaghetti Branching
-- Continual Cascading
+- Merge-a-phobia <span class="hint">merging is scary, so nobody does</span>
+- Branch-a-holic <span class="hint">a branch for everything</span>
+- Spaghetti Branching <span class="hint">tangled merges between lines</span>
+- Continual Cascading <span class="hint">branches that never come home</span>
 
 </v-clicks>
 </div>
 </div>
 
+<div class="source">
+Appleton, Berczuk, Cabrera &amp; Orenstein. <i>Streamed Lines: Branching Patterns for Parallel Software Development</i>. PLoP '98.
+</div>
+
 <!--
 Branching strategies are not a Git invention.
-"Streamed Lines: Branching Patterns for Parallel Software Development" — Appleton, Berczuk, Cabrera, Orenstein, 1998.
+"Streamed Lines: Branching Patterns for Parallel Software Development" from 1998.
 Reading the catalog of patterns today is uncanny. The patterns we still argue about in PRs were named 25+ years ago.
 
 [click] Branch per Task: each change on its own branch.
@@ -298,8 +326,11 @@ Four things evolved over time:
 A compatibility matrix in itself.
 [click] On top of that, many customers got a customized bundle. Every delivery was its own unique permutation.
 
-Each repository produced a SemVer-like version per component, as RPMs. But whenever someone decided some incompatible change was warranted, we forked a numbered release branch on ALL repositories. Hundreds of repos, most forked with no substantial changes. Some with no changes at all.
-Releasing was a nightmare, and the recurring bugs were many. Continual Cascading, live.
+Each repository produced a SemVer-like version per component, as RPMs.
+But whenever someone decided some incompatible change was warranted, we forked a numbered release branch on ALL repositories.
+Hundreds of repos, most forked with no substantial changes. Some with no changes at all.
+
+Releasing was a nightmare, and the recurring bugs were many.
 -->
 
 ---
@@ -308,11 +339,21 @@ Releasing was a nightmare, and the recurring bugs were many. Continual Cascading
 
 <img src="./images/gitflow.svg" class="h-100 mx-auto" />
 
+<div class="source">
+Vincent Driessen. <i><a href="https://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a></i>. nvie.com, January 2010.
+</div>
+
 <!--
 Many popular strategies today are remixes of those patterns, adapted to Git's cheap branching and merging.
-Vincent Driessen's blog post "A successful Git branching model", 2010. Git wasn't even five years old.
+
+Vincent Driessen's blog post "A successful Git branching model" from 2010 went viral and was influential on
+the public perception on development flow at the time.
+
+Git wasn't even five years old.
+
 Two infinite branches: master (production-ready) and develop (integration branch for the next release).
 Short-lived supporting branches: feature branches off develop, release branches off develop, hotfix branches off master. Release and hotfix merge back into both.
+
 It became immensely popular.
 -->
 
@@ -326,9 +367,11 @@ Vincent Driessen, 2020
 
 <!--
 So popular that ten years later, Driessen added a note to the top of his post:
-"git-flow has become hugely popular... to the point where people have started treating it like a standard of sorts — but unfortunately also as a dogma or panacea. If your team is doing continuous delivery of software, I would suggest to adopt a much simpler workflow (like GitHub flow) instead."
 
-git-flow was designed for explicitly versioned software, with multiple versions in the wild. Not the continuously delivered web apps most of us build.
+> "git-flow has become hugely popular... to the point where people have started treating it like a standard of sorts — but unfortunately also as a dogma or panacea. If your team is doing continuous delivery of software, I would suggest to adopt a much simpler workflow (like GitHub flow) instead."
+>
+>git-flow was designed for explicitly versioned software, with multiple versions in the wild. Not the continuously delivered web apps most of us build.
+
 It's not every day the author of a pattern publicly tells the industry to reconsider it.
 -->
 
@@ -356,10 +399,15 @@ class: text-center
 # Trunk is <span class="green">GREEN</span>
 
 <!--
-The saying you'll hear.
-Every change on a branch runs the full set of verification steps on CI. Nothing reaches trunk without a green check mark.
+A statement you will inevitably encounter.
+
+Every change on a branch runs the full set of verification steps on CI.
+
+What is CI you say?
+
+Nothing reaches trunk without a green check mark.
 The branch must be based off trunk, and up-to-date with it. GitHub warns you on the PR when it's not.
-We usually run CI on an active PR from our branch towards a target, which is trunk.
+We usually run CI on an active PR from our branch towards a **target**, which is trunk.
 -->
 
 ---
@@ -370,6 +418,8 @@ We usually run CI on an active PR from our branch towards a target, which is tru
 <div><b>base</b><br><span class="opacity-60 text-lg">where you branched off</span></div>
 <div><b>target</b><br><span class="opacity-60 text-lg">where the PR lands</span></div>
 </div>
+
+<HotTip label="New vocab" />
 
 <!--
 Hot tip, new vocabulary.
@@ -384,15 +434,15 @@ They can differ. But for merging, it's usually trunk that matters.
 
 <v-clicks>
 
-1. Formatting
-2. Linting
-3. Warnings as errors
-4. Testing
+1. Formatting <span class="hint">one tool, no more tabs vs. spaces</span>
+2. Linting <span class="hint">static analysis, zero violations</span>
+3. Warnings as errors <span class="hint">no broken windows</span>
+4. Testing <span class="hint">as much as CI can run</span>
 
 </v-clicks>
 
 <!--
-Besides an up-to-date base, what do we check?
+Besides an up-to-date base, what do we check in CI?
 
 [click] Formatting. At some point we simply stopped arguing about tabs and spaces. One deterministic tool erased decades of debate. Even if it's not your taste, it's consistent.
 
@@ -414,9 +464,11 @@ layout: section
 
 <!--
 Once the PR is green against target, how do the changes get there?
-Merge commit: a special commit bringing branch and target together. Three-way merge if target has moved.
-Squash & merge: all branch commits combined into one, placed onto target.
-Rebase: no merge commit; branch rebased onto target while merging.
+
+- Merge commit: a special commit bringing branch and target together. Three-way merge if target has moved.
+- Squash & merge: all branch commits combined into one, placed onto target.
+- Rebase: no merge commit; branch rebased onto target while merging.
+
 Conflicts: GitHub has basic resolution in the UI, but you usually resolve locally and push.
 -->
 
@@ -430,9 +482,12 @@ Conflicts: GitHub has basic resolution in the UI, but you usually resolve locall
 </v-switch>
 
 <!--
-Up-to-date target first. Nothing extraordinary. The merge commit records two parents, and carries no diff itself. CI on the PR ran on c2, the full set of changes.
+Up-to-date target first. Nothing extraordinary. The merge commit records two parents, and carries no diff itself.
+CI on the PR ran on c2, the full linear set of changes.
 
-[click] Now the branch is behind target. CI tested c2 and is green. But b1 + b2 on trunk combined with c1 + c2 was never tested. No conflicts doesn't mean it works. Trunk can break.
+[click] Now the branch is behind target. CI tested c2 and is green. But b1 + b2 on trunk combined with c1 + c2 was never tested.
+No conflicts doesn't mean it works. Trunk can break.
+
 Caveat: only if c2 was pushed before b2 landed. GitHub merges automatically for pull_request triggered workflows.
 -->
 
@@ -464,7 +519,7 @@ First a refresher: a local git rebase. Replays your commits onto a new base.
 
 [click] Branch behind target: effectively squash & merge, but keeping individual commits.
 
-My recommendation: Rebase & Merge. Easiest history to work with and understand. More on why that matters in commit hygiene.
+My recommendation: Rebase & Merge. Easiest history to work with and understand.
 -->
 
 ---
@@ -473,8 +528,8 @@ My recommendation: Rebase & Merge. Easiest history to work with and understand. 
 
 <v-clicks>
 
-1. Require up-to-date branches
-2. Merge queues
+1. Require up-to-date branches <span class="hint">authors rebase before merging</span>
+2. Merge queues <span class="hint">CI tests the combined result</span>
 
 </v-clicks>
 
@@ -501,10 +556,10 @@ A messy history makes all of these harder.
 
 # How bad can it get?
 
-<Todo>Screenshot: commit history from AI portal local development</Todo>
+<img src="./images/bad_history.svg" class="h-100 mx-auto rounded-lg shadow-xl" />
 
 <!--
-TODO: walk through the screenshot. Don't do it like this.
+Don't do it like this.
 -->
 
 ---
@@ -515,7 +570,9 @@ TODO: walk through the screenshot. Don't do it like this.
 git config set --global alias.ol "log --oneline --format='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
 ```
 
-<Todo>Screenshot: <code>git ol</code> output</Todo>
+<img src="./images/ksat_id_history.svg" class="w-full mt-6 rounded-lg shadow-xl" />
+
+<HotTip />
 
 <style>
 /* The alias is one long line; keep it on screen. */
@@ -533,9 +590,9 @@ git ol: compact one-line log with hash, branch and tag names, title, age and aut
 
 <v-clicks>
 
-- Bug report → obvious fix
-- `git blame` → it was us
-- The commit said why
+- Bug report → obvious fix <span class="hint">one function, clearly wrong</span>
+- `git blame` → it was us <span class="hint">over a year earlier</span>
+- The commit said why <span class="hint">another customer needed it that way</span>
 
 </v-clicks>
 
@@ -561,6 +618,7 @@ Linux kernel, Submitting patches
 
 <!--
 Two desires at odds: one idea per commit, and small commits that are easy to read.
+
 The kernel's rule of thumb continues: "if you make a single change to numerous files, group those changes into a single patch."
 Renaming a function across 40 files: one commit. A bug fix and a perf improvement in the same file: two.
 -->
@@ -583,14 +641,19 @@ docs(cart): document the discount code API
 </v-click>
 
 <!--
-Not up for debate. Not just the last commit on your branch: all of them. Otherwise you break bisect for whoever comes after. The kernel: "they will not thank you if you introduce bugs in the middle".
+All commits should compile, not just the last commit on your branch: all of them.
+We will look at `bisect` later, and why this matters.
 
 Doesn't mean every commit is complete.
+
 [click] The feature works on its own...
+
 [click] ...tests can come after the code they test...
+
 [click] ...docs too. Each commit before is still correct; just not tested or documented yet.
 Tests must come after (or with) the code, or you have a failing commit. At odds with TDD if you commit tests first.
 
+[click]
 The prefixes are Conventional Commits: feat, fix, test, docs, with an optional scope. They'll pay off again in software release.
 -->
 
@@ -599,21 +662,24 @@ The prefixes are Conventional Commits: feat, fix, test, docs, with an optional s
 # `git rebase -i trunk`
 
 ````md magic-move
-```text
+```gitol
+$ git rebase -i trunk
 pick 3f1c2a9 Add discount code model
 pick 8b7d4e1 Validate dicsount codes
 pick 9c0d1e2 WIP: debug logging
 pick 5e6f7a8 Fix typo in discount code model
 ```
 
-```text
+```gitol
+$ git rebase -i trunk
 pick 3f1c2a9 Add discount code model
 pick 5e6f7a8 Fix typo in discount code model
 pick 8b7d4e1 Validate dicsount codes
 pick 9c0d1e2 WIP: debug logging
 ```
 
-```text
+```gitol
+$ git rebase -i trunk
 pick 3f1c2a9 Add discount code model
 fixup 5e6f7a8 Fix typo in discount code model
 reword 8b7d4e1 Validate dicsount codes
@@ -635,10 +701,19 @@ The todo list: one line per commit, oldest at the top.
 [click] "These lines can be re-ordered; they are executed from top to bottom." Move the typo fix under the commit it fixes.
 
 [click] Then change the commands.
-pick: replay untouched. reword: edit the message. edit: stop after it, to amend or split. squash/fixup: meld into the previous one (squash combines messages, fixup keeps the previous). drop: gone. exec: run a command, like your tests.
-Save, close. Typo fix disappears into its commit, the misspelled message gets a second chance, the debug logging is gone.
 
-Every rewritten commit gets a new id. Fine on your branch; rewriting what others built on will ruin their day.
+- pick: replay untouched.
+- reword: edit the commit message.
+- edit: stop after applying the commit, allowing you to operate on the checkout at that point in time
+- squash/fixup: meld into the previous one (squash combines messages, fixup keeps the previous).
+- drop: gone.
+- exec: run a command, like your tests.
+
+Save, close.
+Typo fix disappears into its commit, the misspelled message gets a second chance, the debug logging is gone.
+
+Every rewritten commit gets a new id.
+Fine on your branch; rewriting what others built on will ruin their day.
 -->
 
 ---
@@ -649,9 +724,15 @@ Every rewritten commit gets a new id. Fine on your branch; rewriting what others
 git config set --global rebase.updateRefs true
 ```
 
+<HotTip />
+
 <!--
-Hot tip. Git 2.38 (2022). Rebase force-updates any branches pointing at commits being rebased.
-Very handy once we stack branches. The todo list gets update-ref lines marking where each branch sits.
+Hot tip. Git 2.38 (2022).
+
+Rebase force-updates any branches pointing at commits being rebased.
+
+
+Very handy once we stack branches. More on that later.
 -->
 
 ---
@@ -659,26 +740,80 @@ Very handy once we stack branches. The todo list gets update-ref lines marking w
 # Fix up my history
 
 ````md magic-move
+```gitol
+$ git ol trunk..
+c4d5e6f - (HEAD -> discount-codes) Apply discount at checkout (2 days ago) <Vegard Sandengen>
+8b7d4e1 - Validate discount codes (3 days ago) <Vegard Sandengen>
+3f1c2a9 - Add discount code model (3 days ago) <Vegard Sandengen>
+```
+
 ```bash
+# Review: "model needs an expiry date"
 git commit --fixup=3f1c2a9
 ```
 
-```text
-fixup! Add discount code model
+```gitol
+$ git ol trunk..
+e7f8a9b - (HEAD -> discount-codes) fixup! Add discount code model (5 seconds ago) <Vegard Sandengen>
+c4d5e6f - Apply discount at checkout (2 days ago) <Vegard Sandengen>
+8b7d4e1 - Validate discount codes (3 days ago) <Vegard Sandengen>
+3f1c2a9 - Add discount code model (3 days ago) <Vegard Sandengen>
 ```
 
-```bash
-git rebase -i --autosquash
-git config set --global rebase.autoSquash true
+```gitol
+$ git rebase -i trunk
+pick 3f1c2a9 Add discount code model
+pick 8b7d4e1 Validate discount codes
+pick c4d5e6f Apply discount at checkout
+pick e7f8a9b fixup! Add discount code model
+```
+
+```gitol
+$ git rebase -i --autosquash trunk
+pick 3f1c2a9 Add discount code model
+fixup e7f8a9b fixup! Add discount code model
+pick 8b7d4e1 Validate discount codes
+pick c4d5e6f Apply discount at checkout
+```
+
+```gitol
+$ git ol trunk..
+5f6a7b8 - (HEAD -> discount-codes) Apply discount at checkout (2 seconds ago) <Vegard Sandengen>
+2c3d4e5 - Validate discount codes (2 seconds ago) <Vegard Sandengen>
+9d8e7f6 - Add discount code model (2 seconds ago) <Vegard Sandengen>
 ```
 ````
+
+<v-click at="4">
+
+```bash
+git config set --global rebase.autoSquash true
+```
+
+</v-click>
+
+<style>
+/* The git ol lines are long; keep them on screen. */
+.slidev-code { --slidev-code-font-size: 13px; }
+</style>
 
 <!--
 We moved the typo fix by hand. Git can do the bookkeeping.
 
-[click] A fixup commit, titled "fixup! <original title>". It "changes the content of <commit> but leaves its log message untouched".
+The branch as the reviewer saw it: three commits, newest on top.
 
-[click] With --autosquash, every fixup commit is moved right after its target and marked fixup. Just save and close. Configure it globally.
+[click] Feedback lands on the model, the oldest commit. Fix it, and commit with --fixup pointing at the commit it belongs to.
+A fixup commit "changes the content of <commit> but leaves its log message untouched".
+
+[click] The fixup lands on top, titled "fixup! <original title>". The reviewer sees exactly what changed since last time.
+
+[click] A plain interactive rebase lists them oldest first, so the fixup sits at the bottom, far from where it belongs.
+We could move it by hand, and change from `pick` to `fixup` command like on the previous slide.
+
+[click] With --autosquash, Git matches the "fixup!" title to its target, moves it right below, and marks it fixup. Nothing to edit: save and close. Configure it globally, and plain git rebase -i does this every time.
+
+[click] The result: three commits again, feedback folded into where it belongs. New ids, since every rewritten commit gets one.
+And new ages: git ol shows the committer date, which the rebase set to now. The author date stays.
 
 When? During PR review, only add NEW commits. Your reviewer already read the code; let them review only what changed, not play spot-the-difference with a force push. Make those new commits fixup commits.
 Once all feedback is addressed and reviewers are happy, autosquash right before merging.
@@ -700,17 +835,66 @@ As the team grows, work outpaces review. Either progress slows from context swit
 
 # Patch series
 
-<div class="font-mono text-xl mt-10 space-y-2">
+<div class="grid grid-cols-[1fr_1.4fr] gap-12 mt-10">
+<div class="font-mono text-xl space-y-2">
 <div>[PATCH 1/5] …</div>
 <div>[PATCH 2/5] …</div>
 <div class="opacity-60">⋮</div>
-<div v-click>[PATCH v2 1/5] …</div>
+<div v-click="1">[PATCH v2 1/5] …</div>
+</div>
+<div class="space-y-6">
+<div v-click="3">
+
+```bash
+git format-patch -v2 --cover-letter trunk
+```
+
+<div class="opacity-60 text-base mt-1">one email-ready file per commit, plus a cover letter</div>
+</div>
+<div v-click="4">
+
+```bash
+git request-pull trunk <url> discount-codes
+```
+
+<div class="opacity-60 text-base mt-1">summarise a branch and ask upstream to pull it</div>
+</div>
+</div>
+</div>
+
+<div v-click="2" class="mt-10">
+<blockquote>
+
+On average, it takes at least three tries to get a patch accepted into the kernel. I've had some patch series that's
+taken like 25 times.
+
+</blockquote>
+<div class="mt-2 text-right text-sm opacity-60">— Greg Kroah-Hartman</div>
 </div>
 
 <!--
 Not a new problem. Before PRs, open source sent patches over mailing lists. Dependent work goes out as a numbered patch series. Each reviewed on its own merits, applied in order.
-[click] Feedback? Rework the relevant patch, resend the whole series as v2. The kernel works this way today. git format-patch implements it natively.
+
+[click] Feedback? Rework the relevant patch, resend the whole series as v2. The kernel works this way today.
 Every new version usually gets rebased on latest upstream — resolving the same conflicts again. Remember that; we'll get to rerere.
+
+[click] Greg Kroah-Hartman, stable kernel maintainer:
+
+- "At least three tries" on average. v2, v3, … is the normal path, not a failure.
+- 25 rounds for some series. Every round rebased on a moving upstream.
+
+[click] git format-patch implements it natively:
+
+- One .patch file per commit, subject numbered [PATCH n/m].
+- -v2 marks the next round: [PATCH v2 n/m].
+- --cover-letter adds a [PATCH 0/m] intro email describing the series.
+- Send them with git send-email.
+
+[click] git request-pull, for when mailing every patch doesn't scale:
+
+- Push the branch somewhere public.
+- It prints a summary to mail upstream: where to pull from, the commits, and the diffstat.
+- How subsystem maintainers send their work to Linus.
 
 Also why internet warriors insist on ~75 character lines in commit messages. Those pesky mailing lists! *shakes fist*
 -->
@@ -721,19 +905,43 @@ Also why internet warriors insist on ~75 character lines in commit messages. Tho
 
 <v-clicks>
 
-- 2002 · Andrew Morton's scripts → `quilt`
-- 2005 · StGit, "quilt for git"
-- 2005 · Mercurial Queues
-- 2018 · Stacked Diffs (Phabricator)
+- 2002 · Andrew Morton's scripts → `quilt` <span class="hint">push and pop patches on the kernel tree</span>
+- 2005 · StGit, "quilt for git" <span class="hint">two months after Git was born</span>
+- 2005 · Mercurial Queues <span class="hint">the same idea, for Mercurial</span>
+- <span class="spotlight">Facebook · Phabricator → <b>Stacked Diffs</b></span> <span class="hint">Publicized in a 2018
+  blog post by Jackson Gabbard</span>
 
 </v-clicks>
 
+<style>
+/* The stacked diffs line leads into the next slides; make it stand out. */
+.slidev-layout li:has(> .spotlight) {
+  margin-inline: -0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-left: 4px solid var(--vcs-accent);
+  border-radius: 0.5rem;
+  background: var(--vcs-accent-soft);
+}
+.spotlight b { color: var(--vcs-accent); }
+</style>
+
 <!--
 Developers keep a series in shape as a stack of patches on top of upstream, pushing and popping.
+
 [click] First automated, as far as I can tell, by Andrew Morton in 2002 for the fast-moving kernel tree. Became quilt; mailing list from 2003.
+
 [click] Two months after Git was born: Catalin Marinas, "Stacked GIT 0.1 (a.k.a. quilt for git)". StGit is still developed today.
+
 [click] Around the same time, Mercurial Queues, also inspired by quilt.
-[click] Plaintext patch files get tedious. Facebook's Phabricator: Jackson Gabbard's 2018 post on Stacked Diffs.
+
+[click] Plaintext patch files get tedious, and large organisations need to review changes at scale.
+The best-known answer comes from Facebook — back when they had not wasted billions of dollars on the *meta*-verse.
+
+Their internal review tool, Phabricator, is where the workflow and its name come from: Stacked Diffs.
+
+Jackson Gabbard's 2018 post didn't invent anything.
+It contextualized a different method of working on a generation of developers raised on GitHub flow.
+This is why the concept caught wind.
 -->
 
 ---
@@ -762,13 +970,26 @@ Your work is "a queue of changes ahead of master", each reviewed and landed on i
 <div v-click class="text-center opacity-70">GitHub GA: Oct 6, 2026</div>
 
 <!--
-On GitHub, a PR is a branch, so the stack is a chain of branches, each PR targeting the one below.
 
 Gabbard didn't invent patch series. But by then, GitHub flow was the norm for a generation that never saw patch queues. Old practice, new clothes. It shifted the mental model.
+
 [click] Which eventually got GitHub to ship native stacked pull requests. Generally available October 6th. Last week!
+
+On GitHub, a PR is a branch, so the stack is a chain of branches, each PR targeting the one below.
 
 Our ideals pull in different directions now. Stacked diffs: one commit per unit, amended in place. Reviewers: new commits to see what changed. Everyone: clean trunk.
 On GitHub the commits ARE the review history. I think we forgot that, and review PRs as a whole. But commits are our tools' primary unit.
+-->
+
+---
+
+# Stacked pull requests on GitHub
+
+<img src="./images/github_stack_ui.png" class="h-95 mx-auto rounded-lg shadow-xl" />
+
+<!--
+What it looks like in practice: the whole stack shown on the pull request, each layer its own PR with its own review, merged bottom-up.
+Same picture as the diagram, now in the tool most of us use every day.
 -->
 
 ---
@@ -783,6 +1004,8 @@ On GitHub the commits ARE the review history. I think we forgot that, and review
 git rebase cart/discount-codes -Xours
 ```
 
+<HotTip />
+
 </v-click>
 
 <!--
@@ -796,6 +1019,12 @@ Trunk discipline: the kernel only accepts finished work with a real user. Greg K
 -->
 
 ---
+layout: section
+---
+
+# Toolbox
+
+---
 
 # ReReRe
 
@@ -807,20 +1036,19 @@ git config --global rerere.enabled true
 
 <!--
 Your stack drags on, tons of feedback, trunk keeps moving. You rebase. Again and again.
-Greg Kroah-Hartman: "On average, it takes at least three tries to get a patch accepted into the kernel. I've had some patch series that's taken like 25 times."
+
+If we remember back to Gregs statement that
+> "On average, it takes at least three tries to get a patch accepted into the kernel. I've had some patch series that's taken like 25 times."
+
 Every round is a chance to resolve the exact same conflict again. Rebasing hell.
 
 git rerere: reuse recorded resolution. Resolve once by hand, Git records conflict + resolution, and replays it next time. Off by default.
-Lifesaver for long-lived branches: a series in round 25, or a develop branch reconciled with trunk over and over.
+Lifesaver for long-lived branches: or a develop branch reconciled with trunk over and over.
 
 But it's a band-aid. If you need it, your branches lived too long. Unless you have to — then you'll be glad it exists.
+
+I have personally only had use for this once.
 -->
-
----
-layout: section
----
-
-# Toolbox
 
 ---
 
@@ -860,10 +1088,21 @@ You will be very happy this exists one day.
 
 <img src="./images/cherry_pick.svg" class="h-90 mx-auto" />
 
+<div class="text-center text-lg opacity-70 mt-2">
+
+`s1..s3` picks s2 and s3 · include s1 with `s1^..s3`
+
+</div>
+
 <!--
-Sometimes you want some commits, not a whole branch. "Apply the change each one introduces, recording a new commit for each."
+Sometimes you want a selection of commits, not a whole branch.
+
+### Example
 A couple of commits on the spike/discounts experiment were keepers; you want them on cart/discount-codes.
-Range syntax: s1..s3 is ancestors of s3 but not of s1, so s2 and s3. Include s1 with s1^..s3.
+Range syntax: s1..s3 is the selection of commits that are ancestors of s3 but not of s1, so s2 and s3.
+
+To include s1 use the ^ with s1^..s3.
+
 s2′ and s3′ are brand new commits; the branches aren't joined. Conflicts if the code has drifted.
 -->
 
@@ -948,29 +1187,143 @@ Green trunk, tidy history, changes ready. They need to reach users. Git doesn't 
 
 ---
 
-# Release notes ≠ changelog
+# Release notes
 
-<div class="grid grid-cols-2 gap-12 mt-12 text-center">
-<div><div class="text-2xl font-bold">Release notes</div><div class="opacity-60">the story</div></div>
-<div><div class="text-2xl font-bold">Changelog</div><div class="opacity-60">the record</div></div>
+<div class="opacity-60 text-xl -mt-2">the story</div>
+
+<div class="grid grid-cols-2 gap-8 items-start mt-4">
+<div class="rust-slice top"><img src="./images/rust_release_announcement.png" /></div>
+<div class="rust-slice bottom"><img src="./images/rust_release_announcement.png" /></div>
 </div>
 
-<v-click>
-
-```text
-feat → Features · fix → Bug fixes · test, docs → skipped
-```
-
-<div class="text-center opacity-60">git-cliff</div>
-
-</v-click>
+<style>
+/* One long screenshot (1294×1784), cut at y=950 between the code block and the
+ * text after it, so the two halves sit side by side. Percentage margins are
+ * relative to the width, so -73.4% is 950/1294. */
+.rust-slice {
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.15);
+  background: white;
+}
+.rust-slice img { width: 100%; }
+.rust-slice.top { aspect-ratio: 1294 / 950; }
+.rust-slice.bottom { aspect-ratio: 1294 / 834; }
+.rust-slice.bottom img { margin-top: -73.4%; }
+</style>
 
 <!--
-Release notes: the announcement, for humans. What's new, why care, what can you do now. Dolphin Progress Reports are a joy to read even though I've never used the emulator. Real effort, but that's what people read.
+Release notes ≠ changelog. Two different documents, for different readers.
 
-Changelog: the complete record. Every user-facing change, per release. Keep a Changelog, grouped by component like the Rust release notes, or your own.
+Release notes: the announcement, for humans. What's new, why care, what can you do now.
+-->
 
-[click] This is where Conventional Commits pay off. git-cliff generates changelogs from them. Read it before you publish; it's only as good as the commit messages.
+---
+
+# Changelog
+
+<div class="opacity-60 text-xl -mt-2">the record</div>
+
+<v-switch>
+<template #0>
+
+<div class="grid grid-cols-[1.2fr_1fr] gap-10 items-start mt-6">
+<div>
+
+```md
+# Changelog
+
+## [Unreleased]
+
+### Added
+- Discount codes at checkout.
+
+## [1.0.0] - 2026-09-30
+
+### Added
+- Saved carts across devices.
+
+### Changed
+- Prices shown with VAT included.
+```
+
+</div>
+<div class="kac">
+
+- For humans, not machines
+- Newest release first
+- `Unreleased` on top
+- Added · Changed · Deprecated · Removed · Fixed · Security
+
+</div>
+</div>
+
+</template>
+<template #1>
+
+<div class="grid grid-cols-[1.15fr_auto_1fr] gap-4 items-center mt-6">
+<div>
+
+```gitol
+$ git log --oneline v1.0.0..
+a7c3e91 docs: describe discount codes
+5f6a7b8 feat(checkout): apply discount
+d41e0b2 fix(checkout): round to whole cents
+2c3d4e5 feat(cart): validate discount codes
+b98f1a6 test(cart): cover expired codes
+9d8e7f6 feat(cart): add discount code model
+```
+
+</div>
+<div class="text-center text-[#1d6f66]"><div class="text-3xl">→</div><div class="font-mono text-xs">git cliff</div></div>
+<div>
+
+```md
+## [1.1.0] - 2026-10-14
+
+### 🚀 Features
+
+- *(cart)* Add discount code model
+- *(cart)* Validate discount codes
+- *(checkout)* Apply discount
+
+### 🐛 Bug Fixes
+
+- *(checkout)* Round to whole cents
+```
+
+</div>
+</div>
+
+</template>
+</v-switch>
+
+<div class="source">
+<a href="https://keepachangelog.com">Keep a Changelog</a>: “Don’t let your friends dump git logs into changelogs.” · <a href="https://git-cliff.org">git-cliff</a>
+</div>
+
+<style>
+/* Two code blocks side by side; keep them on screen. */
+.slidev-code { --slidev-code-font-size: 12px; --slidev-code-line-height: 1.5; }
+.kac ul { font-size: 1.15rem; line-height: 1.6rem; }
+.kac li { margin-bottom: 0.6rem; }
+</style>
+
+<!--
+Changelog: the complete record. Every user-facing change, per release.
+
+Keep a Changelog (keepachangelog.com), the example on screen: changelogs are for humans, not machines.
+Newest release first, an Unreleased section at the top, changes grouped as
+ - Added, Changed, Deprecated, Removed, Fixed, Security.
+
+Its motto: "Don't let your friends dump git logs into changelogs."
+Which is why the commit messages have to be good before a tool can do this for us.
+
+[click] This is where Conventional Commits pay off. git-cliff generates changelogs from them based on Keep a Changelog.
+- Left: everything since the last release, v1.0.0.
+- Right: git cliff --unreleased --tag v1.1.0. feat becomes Features, fix becomes Bug fixes, the scope goes in italics. Oldest first, titles capitalised.
+- test and docs are configured out: they matter to us, not to the people upgrading.
+
 -->
 
 ---
@@ -994,10 +1347,51 @@ The tag marks the point. The changelog lists the changes. The release notes tell
 
 # How we release at work
 
-<Todo>Example from work: cutting a release, and the artifacts we get automatically</Todo>
+<img src="./images/dispatch_cut_release_run.png" class="h-95 mx-auto rounded-lg shadow-xl" />
 
 <!--
-TODO: walk through how we cut releases, and what artifacts come out of it automatically.
+Here's how we do it in KSAT ID. One button: a manually dispatched GitHub Actions workflow, "Cut Release".
+
+- Run it from main. Trunk is green, so trunk is releasable.
+- Pick the component: one repository, several things we release on their own. Here, the openfga-model.
+- Pick the version increment: patch, minor or major. A human decides what the change means; the workflow does the arithmetic.
+- Draft or not: publish right away, or leave the GitHub Release as a draft to polish the notes first.
+
+On the left, the run history: one line per release, named after what it cut. Even the failed one is there for anyone to look at.
+-->
+
+---
+
+# Cut Release
+
+<img src="./images/dispatch_cut_release_workflow.png" class="w-full mt-12 rounded-lg shadow-xl" />
+
+<!--
+What happens after the click. Read it left to right.
+
+- Verify & Resolve Release: check that we can release, and work out the next version.
+- Bump Version: write the new version into the component.
+- Apply Release Version: commit it and tag it. The tag is the point in history with a name.
+- Release Component: build for linux/amd64 and linux/arm64, collect the container images, verify, publish them.
+- Publish GitHub Release: the tag, the changelog and the images, in one place.
+
+A couple of minutes, and nobody has to remember the steps. Nobody types a version number or a tag by hand.
+-->
+
+---
+
+# The release
+
+<img src="./images/github_release.png" class="h-95 mx-auto rounded-lg shadow-xl" />
+
+<!--
+The result: KSAT ID OpenFGA Model v0.0.1. Released by github-actions, not by a person.
+
+- The tag and the commit it points at, top line. Component-prefixed, since one repo releases several components.
+- The changelog, generated by git-cliff from our Conventional Commits. Bug fixes and features, scopes in italics. Exactly the slide from before, for real.
+- The container images: name, platforms, and the digest. You deploy by digest, so you know exactly what you're running.
+
+Tag, changelog, artifacts. All from the commit history we kept tidy. That's the payoff for the discipline in the first half of the talk.
 -->
 
 ---
@@ -1012,8 +1406,8 @@ layout: section
 
 <v-clicks>
 
-- Git commit = snapshot
-- Pijul change = patch, with identity
+- Git commit = snapshot <span class="hint">diffs are computed on the fly</span>
+- Pijul change = patch, with identity <span class="hint">a change knows exactly where it applies</span>
 
 </v-clicks>
 
@@ -1061,11 +1455,11 @@ The problem with innovation like this: it's incompatible with Git. Especially fo
 
 <v-clicks>
 
-- Git as the storage backend
-- Everything is a commit
-- Automatic rebase
-- Stable change IDs
-- Conflicts live in commits
+- Git as the storage backend <span class="hint">your colleagues won't notice</span>
+- Everything is a commit <span class="hint">no staging area, no stash</span>
+- Automatic rebase <span class="hint">edit any commit, its descendants follow</span>
+- Stable change IDs <span class="hint">the same ID through amends and rebases</span>
+- Conflicts live in commits <span class="hint">a rebase never stops halfway</span>
 
 </v-clicks>
 
@@ -1104,24 +1498,32 @@ And worktrees let you run agents side by side without trampling each other.
 - Short-lived branches off trunk
 - Trunk is <span class="green">GREEN</span>
 - Stack your PRs
-- Rebase & Merge
 - One logical change per commit
-- Fixup → autosquash
-- Conventional Commits
+- Use _fixup_ commits during review
 - `git rebase -i`
-- Release from tags
+- Merge with `Rebase & Merge`
+- Follow Conventional Commits
+- Release from CI
 
 </v-clicks>
 
 <!--
 [click] Branch off trunk, keep branches short-lived.
+
 [click] Every PR runs formatting, linting, warnings as errors and tests. Require up-to-date branches, or use merge queues. Only merge what leaves trunk releasable.
+
 [click] Split large work into stacked PRs. Each layer easily digestible for a reviewer.
-[click] Rebase & Merge for a cleaner history. Downside: you lose signed commits. May be a dealbreaker.
+
 [click] One logical change per commit. Every commit passes CI.
+
 [click] Address feedback with fixup commits, autosquash right before merging.
-[click] Conventional Commits for a readable history and a generated changelog.
+
 [click] Interactive rebase is your primary tool for all of the above.
+
+[click] Rebase & Merge for a cleaner history. Downside: you lose signed commits. May be a dealbreaker.
+
+[click] Conventional Commits for a readable history and a generated changelog.
+
 [click] Release from tags: changelog, human announcement, GitHub release with assets.
 -->
 
@@ -1132,7 +1534,40 @@ class: text-center
 
 # Thanks!
 
-[veeg.dev/git](https://veeg.dev/git)
+<div class="blog-card">
+<div class="label">This talk is based on the long-form blog post</div>
+<div class="title">Version Control Systems: Why We do What We Do</div>
+<a href="https://veeg.dev/git" class="link">veeg.dev/git</a>
+<div class="extra">more history, more detail, and my full <code>~/.gitconfig</code></div>
+</div>
+
+<style>
+.blog-card {
+  margin: 2.5rem auto 0;
+  max-width: 34rem;
+  padding: 1.5rem 2rem;
+  border: 2px solid var(--vcs-accent);
+  border-radius: 1rem;
+  background: var(--vcs-accent-soft);
+}
+.blog-card .label {
+  color: var(--vcs-accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.blog-card .title { margin-top: 0.5rem; font-size: 1.3rem; font-weight: 600; color: var(--vcs-heading); }
+.blog-card .link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-family: var(--slidev-code-font-family, monospace);
+  font-size: 2.2rem;
+  font-weight: 700;
+  border: none;
+}
+.blog-card .extra { margin-top: 0.5rem; color: var(--vcs-muted); font-size: 1rem; }
+</style>
 
 <!--
 The long form of this talk is on the blog, including my full ~/.gitconfig in the appendix.
