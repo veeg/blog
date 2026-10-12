@@ -1,1 +1,4 @@
 website/public/
+# Generated from talks/*/slides.md by talks/publish.mjs.
+website/static/talks/
+website/content/talks.json

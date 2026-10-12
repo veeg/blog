@@ -29,6 +29,22 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: talks/package-lock.json
+
+      - name: Install talk dependencies
+        run: npm ci
+        working-directory: talks
+
+      # Talks with `publish: true` are built into website/static/talks/ and listed on the homepage.
+      - name: Build talks
+        run: npm run build
+        working-directory: talks
+
       - name: Install Zola
         run: |
           curl --proto '=https' --tlsv1.2 -sSfL \
