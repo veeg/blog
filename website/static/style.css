@@ -58,7 +58,7 @@ h1 { font-size: 1.9rem; margin: 0 0 0.4rem; letter-spacing: -0.01em; }
 h2 { font-size: 1.35rem; margin: 2.2rem 0 0.6rem; }
 h3 { font-size: 1.1rem; margin: 1.8rem 0 0.5rem; }
 
-.meta, .label, .site-header, .site-footer, .toc, .post-nav, .archive {
+.meta, .label, .site-header, .site-footer, .toc, .recent, .archive {
   font-family: var(--sans);
 }
 .meta { color: var(--muted); font-size: 0.8rem; margin: 0 0 1.2rem; }
@@ -139,7 +139,8 @@ main, .site-header, .site-footer {
 .archive a:hover { color: var(--accent); }
 
 /* ---------- Post ---------- */
-/* On wide screens the contents list sits in the right margin, outside the reading column. */
+/* On wide screens the contents list sits in the right margin, outside the reading column.
+ * Gap plus width (14rem) must fit the margin at 1200px, or the page scrolls sideways. */
 .post-layout { position: relative; }
 .toc { display: none; }
 @media (min-width: 1200px) {
@@ -148,16 +149,35 @@ main, .site-header, .site-footer {
     position: absolute;
     top: 0;
     bottom: 0;
-    left: calc(100% + 3rem);
-    width: 14rem;
+    left: calc(100% + 2.5rem);
+    width: 11.5rem;
   }
-  .toc > * { position: sticky; top: 2rem; }
+  .toc .sticky { position: sticky; top: 2rem; }
 }
 .toc ol { list-style: none; margin: 0; padding: 0 0 0 0.9rem; border-left: 1px solid var(--border); font-size: 0.75rem; line-height: 1.5; }
 .toc ol ol { border: 0; padding-left: 0.8rem; }
 .toc li { margin: 0.35rem 0; }
 .toc a { color: var(--muted); text-decoration: none; }
 .toc a:hover, .toc a[aria-current="true"] { color: var(--accent); }
+
+/* Recent posts mirror the contents list, in the left margin. */
+.recent { display: none; }
+@media (min-width: 1200px) {
+  .recent {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: calc(100% + 2.5rem);
+    width: 11.5rem;
+    text-align: right;
+  }
+  .recent .sticky { position: sticky; top: 2rem; }
+}
+.recent ol { list-style: none; margin: 0; padding: 0 0.9rem 0 0; border-right: 1px solid var(--border); font-size: 0.75rem; line-height: 1.5; }
+.recent li { margin: 0.5rem 0; }
+.recent a { color: var(--muted); text-decoration: none; }
+.recent a:hover, .recent a[aria-current="page"] { color: var(--accent); }
 
 .prose > :first-child { margin-top: 0; }
 .prose p, .prose ul, .prose ol { margin: 0 0 1.1rem; }
@@ -169,7 +189,50 @@ main, .site-header, .site-footer {
   color: var(--muted);
   font-style: italic;
 }
-.prose img { max-width: 100%; height: auto; }
+/* Callouts (templates/components/hot_tip.html, story_time.html): text on the left, icon on the right. */
+.prose .callout {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin: 1.6rem 0;
+  padding: 0.9rem 1.1rem;
+  border-left: 3px solid var(--callout-color);
+  border-radius: 0 6px 6px 0;
+  background: var(--callout-bg);
+}
+.prose .hot-tip { --callout-color: var(--accent); --callout-bg: var(--accent-soft); }
+.prose .story-time { --callout-color: light-dark(#c2410c, #fb923c); --callout-bg: light-dark(#f7e9df, #2a211b); }
+.prose .callout-body { flex: 1; min-width: 0; }
+.prose .callout-body > :last-child { margin-bottom: 0; }
+.prose .callout-icon { flex: none; width: 3.4rem; height: 3.4rem; fill: var(--callout-color); opacity: 0.85; }
+.prose .callout-icon-cutout { fill: var(--callout-bg); }
+.prose .callout-label {
+  margin: 0 0 0.35rem;
+  color: var(--callout-color);
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+/* Inline highlight, e.g. <span class="green">GREEN</span>. */
+.prose .green { color: light-dark(#15803d, #4ade80); font-weight: 700; }
+
+/* Footnotes use symbols instead of numbers. Relies on bottom_footnotes in zola.toml, which lists the
+ * footnotes in reference order, so the nth reference and the nth footnote get the same symbol.
+ * A footnote referenced twice would throw the reference symbols off by one. */
+@counter-style footnote-symbols {
+  system: symbolic;
+  symbols: "*" "†" "‡" "§";
+  suffix: " ";
+}
+.prose { counter-reset: footnote-ref; }
+.prose .footnote-reference { counter-increment: footnote-ref; }
+.prose .footnote-reference a { font-size: 0; text-decoration: none; }
+.prose .footnote-reference a::after { content: counter(footnote-ref, footnote-symbols); font-size: 0.8rem; }
+.prose .footnotes { font-size: 0.9rem; color: var(--muted); }
+.prose .footnotes-list { list-style: footnote-symbols; }
+.prose img { display: block; max-width: 100%; height: auto; margin-inline: auto; }
 .prose hr { border: 0; border-top: 1px solid var(--border); margin: 2.4rem 0; }
 
 .prose h2, .prose h3 { position: relative; }
@@ -184,17 +247,6 @@ main, .site-header, .site-footer {
 @media (max-width: 719px) {
   .anchor { display: none; }
 }
-
-.post-nav {
-  display: flex;
-  justify-content: space-between;
-  gap: 1.5rem;
-  margin-top: 3rem;
-  padding-top: 1.2rem;
-  border-top: 1px solid var(--border);
-  font-size: 0.8rem;
-}
-.post-nav .newer { margin-left: auto; text-align: right; }
 
 /* ---------- Code ---------- */
 code { font-family: var(--mono); font-size: 0.85em; }
@@ -235,6 +287,281 @@ pre.giallo {
   min-width: 3ch;
   text-align: right;
   opacity: 0.8;
+}
+
+/* ---------- Merge demo ---------- */
+.merge-demo,
+.bisect-demo {
+  --merge-plain: #6b7280;
+  --merge-base: #0f766e;
+  --merge-alice: #c2410c;
+  --merge-bob: #7e22ce;
+  margin: 1.8rem 0;
+  padding: 1.2rem 1.2rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  font-family: var(--sans);
+}
+.prose .merge-demo-heading,
+.prose .bisect-demo-heading {
+  margin: 0 0 1.1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-align: center;
+  text-transform: uppercase;
+}
+/* Tall enough for the longest file, so the caption and buttons don't jump between steps. */
+.merge-demo-stage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 1.6rem;
+  min-height: 22.4rem;
+}
+.merge-demo-column { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; min-width: 0; }
+.merge-demo-title { color: var(--muted); font-size: 0.7rem; line-height: 1.3; min-height: 1.4rem; text-align: center; white-space: nowrap; }
+.merge-demo-title > span { font-weight: 700; }
+/* Under the commit graph every title is two lines (branch and change), so the rows of lines align. */
+.merge-demo-lanes + .merge-demo-title { min-height: 2.6em; }
+.merge-demo-title > .is-base,
+.merge-demo-title > .is-merge { color: var(--merge-base); }
+.merge-demo-title > .is-alice { color: var(--merge-alice); }
+.merge-demo-title > .is-bob { color: var(--merge-bob); }
+
+/* Commit graph: a node above each column, on one of three lanes (trunk, alice, bob), joined by SVG edges drawn behind them. */
+.merge-demo-lanes { position: relative; width: 100%; height: 3.2rem; }
+.merge-demo-node {
+  position: absolute;
+  left: 50%;
+  z-index: 1;
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-left: -0.4rem;
+  border-radius: 50%;
+}
+.merge-demo-node.lane-0 { top: 0.2rem; }
+.merge-demo-node.lane-1 { top: 1.2rem; }
+.merge-demo-node.lane-2 { top: 2.2rem; }
+.merge-demo-node.is-base { background: var(--merge-base); }
+.merge-demo-node.is-alice { background: var(--merge-alice); }
+.merge-demo-node.is-bob { background: var(--merge-bob); }
+/* A merge commit: a ring, so it stands out from ordinary commits on trunk. */
+.merge-demo-node.is-merge { border: 3px solid var(--merge-base); background: var(--surface); }
+.merge-demo-graph { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.merge-demo-graph path { fill: none; stroke-width: 2.5; }
+.merge-demo-graph .is-alice { stroke: var(--merge-alice); }
+.merge-demo-graph .is-bob { stroke: var(--merge-bob); }
+.merge-demo-graph .is-base { stroke: var(--merge-base); }
+.merge-demo-line {
+  display: grid;
+  place-items: center;
+  grid-auto-flow: column;
+  min-width: 2.6rem;
+  height: 2rem;
+  padding: 0 0.5rem;
+  border-radius: 4px;
+  color: #fff;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.merge-demo-line sub { display: none; font-size: 0.65em; opacity: 0.85; }
+.merge-demo-line.show-tag sub { display: inline; }
+.merge-demo-line.is-plain { background: var(--merge-plain); }
+.merge-demo-line.is-base { background: var(--merge-base); }
+.merge-demo-line.is-alice { background: var(--merge-alice); }
+.merge-demo-line.is-bob { background: var(--merge-bob); }
+.merge-demo-line.is-context { color: var(--muted); font-weight: 400; }
+/* Each column's lines sit in a card titled after the file, so it reads as the file at that commit. */
+.merge-demo-file {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.4rem 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg);
+}
+.merge-demo-file-name { color: var(--muted); font-family: var(--mono); font-size: 0.6rem; }
+.merge-demo figcaption,
+.bisect-demo figcaption {
+  min-height: 3.2em;
+  margin-top: 0.6rem;
+  color: var(--text);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  text-align: center;
+}
+.merge-demo-controls,
+.bisect-demo-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.6rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+.merge-demo-controls[hidden],
+.bisect-demo-controls[hidden] { display: none; }
+@media (max-width: 719px) {
+  .merge-demo,
+  .bisect-demo { padding-inline: 0.6rem; }
+  .merge-demo-stage { gap: 0.6rem; }
+}
+.merge-demo-controls button,
+.bisect-demo-controls button {
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+.merge-demo-controls button:hover:not(:disabled),
+.bisect-demo-controls button:hover:not(:disabled) { color: var(--accent); border-color: var(--accent); }
+.merge-demo-controls button:disabled,
+.bisect-demo-controls button:disabled { opacity: 0.4; cursor: default; }
+
+/* ---------- Bisect demo ---------- */
+/* Shares the frame, heading, caption and buttons with the merge demo above. */
+.bisect-demo {
+  --bisect-good: light-dark(#0b7a0b, #2fae2f);
+  --bisect-bad: light-dark(#c62f2f, #e06060);
+}
+.bisect-demo-stage { min-height: 17rem; }
+/* The commit row: one equal-width cell per commit, so the HEAD marker and the
+ * suspect bracket can be placed by percentage and slide between steps. */
+.bisect-demo-track { position: relative; padding: 1.7rem 0 2rem; }
+.bisect-demo-row { position: relative; display: grid; grid-template-columns: repeat(17, 1fr); }
+.bisect-demo-row::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 2%;
+  right: 2%;
+  border-top: 2px solid var(--border);
+}
+.bisect-demo-cell { position: relative; display: flex; justify-content: center; }
+.bisect-demo-commit {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(1.3rem, 100%);
+  aspect-ratio: 1;
+  border: 2px solid var(--muted);
+  border-radius: 50%;
+  background: var(--surface);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1;
+  transition: background-color 0.3s, border-color 0.3s, opacity 0.3s, box-shadow 0.3s;
+}
+.bisect-demo-commit.is-cleared { border-color: var(--border); background: var(--border); opacity: 0.6; }
+.bisect-demo-commit.is-good { border-color: var(--bisect-good); background: var(--bisect-good); }
+.bisect-demo-commit.is-bad { border-color: var(--bisect-bad); background: var(--bisect-bad); }
+.bisect-demo-commit.is-skip { border-color: var(--muted); background: var(--muted); }
+.bisect-demo-commit.is-culprit {
+  border-color: var(--bisect-bad);
+  background: var(--bisect-bad);
+  box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px var(--bisect-bad);
+}
+.bisect-demo-tag {
+  position: absolute;
+  top: 100%;
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  white-space: nowrap;
+}
+.bisect-demo-head,
+.bisect-demo-bracket { position: absolute; transition: left 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.bisect-demo-head { top: 0; display: flex; justify-content: center; }
+.bisect-demo-head span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.bisect-demo-head span::after { content: "▾"; line-height: 1; }
+/* Sits below the tags, as a line with end ticks over the suspects. */
+.bisect-demo-bracket {
+  bottom: 0;
+  height: 0.45rem;
+  border: 2px solid var(--accent);
+  border-top: 0;
+  border-radius: 0 0 4px 4px;
+}
+.bisect-demo-bracket[hidden] { display: none; }
+.bisect-demo-suspects {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.15rem;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.prose .bisect-demo-checkout {
+  margin: 1.6rem 0 0.6rem;
+  color: var(--text);
+  font-size: 0.8rem;
+  text-align: center;
+}
+.bisect-demo-checkout code { margin-right: 0.1rem; }
+.bisect-demo-label {
+  margin-right: 0.5rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.bisect-demo-result { margin-left: 0.6rem; font-weight: 700; }
+.bisect-demo-result.is-good { color: var(--bisect-good); }
+.bisect-demo-result.is-bad { color: var(--bisect-bad); }
+.bisect-demo-result.is-skip { color: var(--muted); }
+/* Tall enough for the longest step, so the caption and buttons don't jump. */
+.prose .bisect-demo-term {
+  min-height: 9.6rem;
+  margin: 0;
+  padding: 0.7rem 0.9rem;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--code-bg);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+.bisect-demo-term .is-cmd { color: var(--heading); font-weight: 700; }
+.bisect-demo-term .is-out { color: var(--text); }
+.bisect-demo-term .is-comment { color: var(--muted); }
+/* The longest captions run to three lines, and on narrow screens the caption and the
+ * checked-out line wrap further, so the buttons don't jump between steps. */
+.bisect-demo figcaption { min-height: 4.8em; }
+@media (max-width: 719px) {
+  .bisect-demo figcaption { min-height: 9.6em; }
+  .prose .bisect-demo-checkout { min-height: 3.2em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bisect-demo-commit,
+  .bisect-demo-head,
+  .bisect-demo-bracket { transition: none; }
 }
 
 /* ---------- 404 ---------- */

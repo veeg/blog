@@ -1,0 +1,18 @@
+{# Step-through of a git bisect session, driven by static/bisect-demo.js.
+ # The output is rendered inside Markdown, so keep it free of blank and deeply indented lines.
+ # The fallback paragraph shows until the script takes over. #}
+{% component bisect_demo() %}
+<figure class="bisect-demo" data-bisect-demo aria-labelledby="bisect-demo-title">
+<p class="bisect-demo-heading" id="bisect-demo-title">Git bisect: finding the commit that introduced a bug</p>
+<div class="bisect-demo-stage">
+<p class="bisect-demo-fallback">A newly written test reproduces a discount code being applied twice on <code>trunk</code>, and passes on <code>v1.0</code>, leaving 16 suspect commits in between. Bisect tests the commit in the middle of the suspects and halves them each time, finding the first bad commit <code>ef64843</code> in 4 test runs.</p>
+</div>
+<figcaption aria-live="polite"></figcaption>
+<div class="bisect-demo-controls" hidden>
+<button type="button" data-prev>← Back</button>
+<span class="bisect-demo-count"></span>
+<button type="button" data-next>Next →</button>
+</div>
+</figure>
+<script src="{{ get_url(path='bisect-demo.js', cachebust=true) }}" defer></script>
+{% endcomponent bisect_demo %}

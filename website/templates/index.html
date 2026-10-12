@@ -33,4 +33,20 @@
 {% else %}
   <p>No posts yet.</p>
 {% endif %}
+
+{# Written by talks/publish.mjs (`npm run build` in talks/). Missing until then, so not required. #}
+{% set talks = load_data(path="content/talks.json", required=false) %}
+{% if talks %}
+<section class="archive">
+  <h2 class="label">Talks</h2>
+  <ol>
+    {% for talk in talks %}
+    <li>
+      <time datetime="{{ talk.date }}">{{ talk.date | date(format="%Y-%m") }}</time>
+      <a href="{{ get_url(path=talk.url, trailing_slash=true) }}">{{ talk.title }}</a>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+{% endif %}
 {% endblock %}

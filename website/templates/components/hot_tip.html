@@ -1,0 +1,14 @@
+{# A "Hot Tip!" callout. The body is Markdown, e.g.
+ #   {% <hot_tip> %}
+ #   Use `git rerere` to remember conflict resolutions.
+ #   {% </hot_tip> %}
+ # The output is rendered inside Markdown, so keep it free of blank and deeply indented lines. #}
+{% component hot_tip() %}
+<aside class="callout hot-tip" aria-label="Hot tip">
+<div class="callout-body">
+<p class="callout-label">Hot Tip!</p>
+{{ body | markdown | safe }}
+</div>
+<svg class="callout-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C13 6 18 8.5 18 14A6 6 0 0 1 6 14C6 11 7.5 9.5 9 8C9 10 10 11.5 11.5 12C11 8.5 11 5 12 2Z"/><path class="callout-icon-cutout" d="M12 21A2.5 2.5 0 0 1 9.5 18.5C9.5 16.5 11 15.5 12 14C13 15.5 14.5 16.5 14.5 18.5A2.5 2.5 0 0 1 12 21Z"/></svg>
+</aside>
+{% endcomponent hot_tip %}

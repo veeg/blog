@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 334" width="780" height="334" role="img" aria-labelledby="title desc">
+  <title id="title">Cherry-picking a range of commits between branches</title>
+  <desc id="desc">Two branches grow from b0 on trunk: spike/discounts with commits s1, s2 and s3, and cart/discount-codes with c1 and c2. git cherry-pick s1..s3 copies s2 and s3, but not s1, onto cart/discount-codes as new commits s2′ and s3′. The original commits stay on spike/discounts.</desc>
+  <style>
+    text { font-family: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace; }
+    .name { font-size: 14px; font-weight: 600; }
+    .title { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.12em; fill: #2a2723; }
+    .rule { stroke: #6f6a62; stroke-opacity: 0.35; stroke-width: 1; }
+    .heading { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; fill: #6f6a62; }
+    .cid { font-size: 10px; fill: #6f6a62; }
+    .sub { font-size: 12px; fill: #6f6a62; }
+    .note { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-style: italic; fill: #6f6a62; }
+    .pick { stroke: #7e22ce; }
+    .name.pick { fill: #7e22ce; stroke: none; }
+    .copy { fill: none; stroke: #6f6a62; stroke-width: 2; stroke-dasharray: 5 5; }
+    .arrowhead { fill: #6f6a62; }
+    .edge { fill: none; stroke-width: 4; stroke-linecap: round; }
+    .leader { fill: none; stroke: #6f6a62; stroke-width: 1.5; stroke-dasharray: 3 5; }
+    .commit { fill: #fbf8f1; stroke-width: 3; }
+    .trunk { stroke: #1d6f66; }
+    .feat { stroke: #c2410c; }
+    .ghost { stroke: #6f6a62; stroke-opacity: 0.6; }
+    .edge.ghost { stroke-width: 2.5; stroke-dasharray: 4 5; }
+    .commit.ghost { stroke-width: 2; }
+    .name.trunk { fill: #1d6f66; stroke: none; }
+    .name.feat { fill: #c2410c; stroke: none; }
+    @media (prefers-color-scheme: dark) {
+      .title { fill: #d9d6cf; }
+      .rule { stroke: #8d8a83; }
+      .heading, .cid, .sub, .note { fill: #8d8a83; }
+      .pick { stroke: #c084fc; }
+      .name.pick { fill: #c084fc; }
+      .leader, .ghost, .copy { stroke: #8d8a83; }
+      .arrowhead { fill: #8d8a83; }
+      .commit { fill: #121417; }
+      .trunk { stroke: #6fc2b8; }
+      .feat { stroke: #fb923c; }
+      .name.trunk { fill: #6fc2b8; }
+      .name.feat { fill: #fb923c; }
+    }
+  </style>
+  <text x="390" y="26" text-anchor="middle" class="title">CHERRY-PICK</text>
+  <line class="rule" x1="20" y1="40" x2="760" y2="40"/>
+  <g transform="translate(0 44)">
+
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arrowhead" d="M0 0 L10 5 L0 10 Z"/></marker></defs>
+  <path class="leader" d="M354 70 H548"/>
+  <path class="leader" d="M484 160 H548"/>
+  <path class="edge trunk" d="M60 240 H545"/>
+  <path class="edge pick" d="M130 240 C165 240, 165 70, 200 70"/>
+  <path class="edge pick" d="M200 70 H340"/>
+  <path class="edge feat" d="M130 240 C165 240, 165 160, 200 160"/>
+  <path class="edge feat" d="M200 160 H470"/>
+  <path class="copy" d="M278 80 C310 120, 360 110, 391 149" marker-end="url(#arrow)"/>
+  <path class="copy" d="M348 80 C380 120, 430 110, 461 149" marker-end="url(#arrow)"/>
+  <text x="410" y="108" class="note">git cherry-pick s1..s3</text>
+  <circle class="commit trunk" cx="60" cy="240" r="8"/>
+  <circle class="commit trunk" cx="130" cy="240" r="8"/>
+  <text x="130" y="264" text-anchor="middle" class="cid">b0</text>
+  <circle class="commit pick" cx="200" cy="70" r="8"/>
+  <circle class="commit pick" cx="270" cy="70" r="8"/>
+  <circle class="commit pick" cx="340" cy="70" r="8"/>
+  <text x="200" y="94" text-anchor="middle" class="cid">s1</text>
+  <text x="270" y="94" text-anchor="middle" class="cid">s2</text>
+  <text x="340" y="94" text-anchor="middle" class="cid">s3</text>
+  <circle class="commit feat" cx="200" cy="160" r="8"/>
+  <circle class="commit feat" cx="270" cy="160" r="8"/>
+  <circle class="commit feat" cx="400" cy="160" r="8"/>
+  <circle class="commit feat" cx="470" cy="160" r="8"/>
+  <text x="200" y="184" text-anchor="middle" class="cid">c1</text>
+  <text x="270" y="184" text-anchor="middle" class="cid">c2</text>
+  <text x="400" y="184" text-anchor="middle" class="cid">s2′</text>
+  <text x="470" y="184" text-anchor="middle" class="cid">s3′</text>
+  <text x="560" y="75" class="name pick">spike/discounts</text>
+  <text x="560" y="165" class="name feat">cart/discount-codes</text>
+  <text x="560" y="245" class="name trunk">trunk</text>
+  </g>
+</svg>

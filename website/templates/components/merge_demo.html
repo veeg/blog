@@ -1,0 +1,18 @@
+{# Step-through comparison of a Git merge and a Pijul merge, driven by static/merge-demo.js.
+ # The output is rendered inside Markdown, so keep it free of blank and deeply indented lines.
+ # The fallback paragraph shows until the script takes over. #}
+{% component merge_demo() %}
+<figure class="merge-demo" data-merge-demo aria-labelledby="merge-demo-title">
+<p class="merge-demo-heading" id="merge-demo-title">Git vs Pijul: merging the same two branches</p>
+<div class="merge-demo-stage">
+<p class="merge-demo-fallback">On trunk, a file reads <code>A B</code>. On her branch, Alice commits changes that turn it into <code>A B G A B</code>, and her branch is merged into trunk. On his branch, Bob commits a change that turns the original into <code>A X B</code>. When his branch is merged into trunk, Git gives <code>A X B G A B</code>, Pijul gives <code>A B G A X B</code>.</p>
+</div>
+<figcaption aria-live="polite"></figcaption>
+<div class="merge-demo-controls" hidden>
+<button type="button" data-prev>← Back</button>
+<span class="merge-demo-count"></span>
+<button type="button" data-next>Next →</button>
+</div>
+</figure>
+<script src="{{ get_url(path='merge-demo.js', cachebust=true) }}" defer></script>
+{% endcomponent merge_demo %}

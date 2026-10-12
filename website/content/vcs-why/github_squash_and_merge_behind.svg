@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 384" width="780" height="384" role="img" aria-labelledby="title desc">
+  <title id="title">GitHub’s squash and merge on a pull request behind its target</title>
+  <desc id="desc">A pull request from cart/discount-codes, with commits c1 and c2, is based on b0, while its target branch trunk has moved on to b1 and b2. After GitHub’s squash and merge, trunk gets one new commit after b2, c1+c2, holding the changes of both, with b2 as its only parent. The original c1 and c2 are left behind.</desc>
+  <style>
+    text { font-family: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace; }
+    .name { font-size: 14px; font-weight: 600; }
+    .title { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.12em; fill: #2a2723; }
+    .rule { stroke: #6f6a62; stroke-opacity: 0.35; stroke-width: 1; }
+    .heading { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; fill: #6f6a62; }
+    .cid { font-size: 10px; fill: #6f6a62; }
+    .sub { font-size: 12px; fill: #6f6a62; }
+    .note { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-style: italic; fill: #6f6a62; }
+    .edge { fill: none; stroke-width: 4; stroke-linecap: round; }
+    .leader { fill: none; stroke: #6f6a62; stroke-width: 1.5; stroke-dasharray: 3 5; }
+    .commit { fill: #fbf8f1; stroke-width: 3; }
+    .trunk { stroke: #1d6f66; }
+    .feat { stroke: #c2410c; }
+    .ghost { stroke: #6f6a62; stroke-opacity: 0.6; }
+    .edge.ghost { stroke-width: 2.5; stroke-dasharray: 4 5; }
+    .commit.ghost { stroke-width: 2; }
+    .name.trunk { fill: #1d6f66; stroke: none; }
+    .name.feat { fill: #c2410c; stroke: none; }
+    @media (prefers-color-scheme: dark) {
+      .title { fill: #d9d6cf; }
+      .rule { stroke: #8d8a83; }
+      .heading, .cid, .sub, .note { fill: #8d8a83; }
+      .leader, .ghost { stroke: #8d8a83; }
+      .commit { fill: #121417; }
+      .trunk { stroke: #6fc2b8; }
+      .feat { stroke: #fb923c; }
+      .name.trunk { fill: #6fc2b8; }
+      .name.feat { fill: #fb923c; }
+    }
+  </style>
+  <text x="390" y="26" text-anchor="middle" class="title">GITHUB SQUASH AND MERGE</text>
+  <line class="rule" x1="20" y1="40" x2="760" y2="40"/>
+  <g transform="translate(0 44)">
+
+  <text x="20" y="24" class="heading">PULL REQUEST, BEHIND TARGET</text>
+  <path class="leader" d="M284 110 H548"/>
+  <path class="leader" d="M284 60 H548"/>
+  <path class="edge trunk" d="M60 110 H270"/>
+  <path class="edge feat" d="M130 110 C165 110, 165 60, 200 60"/>
+  <path class="edge feat" d="M200 60 H270"/>
+  <circle class="commit trunk" cx="60" cy="110" r="8"/>
+  <circle class="commit trunk" cx="130" cy="110" r="8"/>
+  <circle class="commit trunk" cx="200" cy="110" r="8"/>
+  <circle class="commit trunk" cx="270" cy="110" r="8"/>
+  <text x="130" y="134" text-anchor="middle" class="cid">b0</text>
+  <text x="200" y="134" text-anchor="middle" class="cid">b1</text>
+  <text x="270" y="134" text-anchor="middle" class="cid">b2</text>
+  <circle class="commit feat" cx="200" cy="60" r="8"/>
+  <circle class="commit feat" cx="270" cy="60" r="8"/>
+  <text x="200" y="84" text-anchor="middle" class="cid">c1</text>
+  <text x="270" y="84" text-anchor="middle" class="cid">c2</text>
+  <text x="560" y="115" class="name trunk">trunk</text>
+  <text x="560" y="131" class="sub">target branch</text>
+  <text x="560" y="65" class="name feat">cart/discount-codes</text>
+
+  <text x="20" y="190" class="heading">AFTER SQUASH AND MERGE ON GITHUB</text>
+  <path class="leader" d="M354 300 H548"/>
+  <path class="edge ghost" d="M130 300 C165 300, 165 215, 200 215"/>
+  <path class="edge ghost" d="M200 215 H270"/>
+  <circle class="commit ghost" cx="200" cy="215" r="8"/>
+  <circle class="commit ghost" cx="270" cy="215" r="8"/>
+  <text x="200" y="239" text-anchor="middle" class="cid">c1</text>
+  <text x="270" y="239" text-anchor="middle" class="cid">c2</text>
+  <text x="292" y="219" class="note">left behind</text>
+  <path class="edge trunk" d="M60 300 H340"/>
+  <circle class="commit trunk" cx="60" cy="300" r="8"/>
+  <circle class="commit trunk" cx="130" cy="300" r="8"/>
+  <circle class="commit trunk" cx="200" cy="300" r="8"/>
+  <circle class="commit trunk" cx="270" cy="300" r="8"/>
+  <text x="130" y="324" text-anchor="middle" class="cid">b0</text>
+  <text x="200" y="324" text-anchor="middle" class="cid">b1</text>
+  <text x="270" y="324" text-anchor="middle" class="cid">b2</text>
+  <circle class="commit feat" cx="340" cy="300" r="8"/>
+  <text x="340" y="324" text-anchor="middle" class="cid">c1+c2</text>
+  <text x="560" y="305" class="name trunk">trunk</text>
+  <text x="560" y="321" class="sub">target branch</text>
+  </g>
+</svg>

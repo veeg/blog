@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 290" width="800" height="290" role="img" aria-labelledby="title desc">
+  <title id="title">A stack of branches</title>
+  <desc id="desc">Three branches stacked on top of trunk. cart/discount-codes is based on trunk, cart/discount-api is based on cart/discount-codes, and cart/discount-ui is based on cart/discount-api. The stack starts from the base commit on trunk. Each branch holds two commits, c1 to c6 from the bottom of the stack up. Each pull request targets the branch below it.</desc>
+  <style>
+    text { font-family: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace; font-size: 14px; font-weight: 600; }
+    .pr { font-size: 12px; font-weight: 400; fill: #6f6a62; }
+    .cid { font-size: 10px; font-weight: 400; fill: #6f6a62; }
+    .edge { fill: none; stroke-width: 4; stroke-linecap: round; }
+    .leader { fill: none; stroke: #6f6a62; stroke-width: 1.5; stroke-dasharray: 3 5; }
+    .commit { fill: #fbf8f1; stroke-width: 3; }
+    .s-main { stroke: #1d6f66; }
+    .f-main { fill: #1d6f66; }
+    .s-s1 { stroke: #c2410c; }
+    .f-s1 { fill: #c2410c; }
+    .s-s2 { stroke: #7e22ce; }
+    .f-s2 { fill: #7e22ce; }
+    .s-s3 { stroke: #1d4ed8; }
+    .f-s3 { fill: #1d4ed8; }
+    @media (prefers-color-scheme: dark) {
+      .pr, .cid { fill: #8d8a83; }
+      .leader { stroke: #8d8a83; }
+      .commit { fill: #121417; }
+      .s-main { stroke: #6fc2b8; }
+      .f-main { fill: #6fc2b8; }
+      .s-s1 { stroke: #fb923c; }
+      .f-s1 { fill: #fb923c; }
+      .s-s2 { stroke: #c084fc; }
+      .f-s2 { fill: #c084fc; }
+      .s-s3 { stroke: #60a5fa; }
+      .f-s3 { fill: #60a5fa; }
+    }
+  </style>
+
+  <path class="leader" d="M264 190 H533"/>
+  <path class="leader" d="M384 130 H533"/>
+  <path class="leader" d="M504 70 H533"/>
+
+  <path class="edge s-main" d="M70 250 H530"/>
+  <path class="edge s-s1" d="M130 250 C165 250, 165 190, 200 190"/>
+  <path class="edge s-s1" d="M200 190 H250"/>
+  <path class="edge s-s2" d="M250 190 C285 190, 285 130, 320 130"/>
+  <path class="edge s-s2" d="M320 130 H370"/>
+  <path class="edge s-s3" d="M370 130 C405 130, 405 70, 440 70"/>
+  <path class="edge s-s3" d="M440 70 H490"/>
+
+  <circle class="commit s-main" cx="70" cy="250" r="8"/>
+  <circle class="commit s-main" cx="130" cy="250" r="8"/>
+  <circle class="commit s-s1" cx="200" cy="190" r="8"/>
+  <circle class="commit s-s1" cx="250" cy="190" r="8"/>
+  <circle class="commit s-s2" cx="320" cy="130" r="8"/>
+  <circle class="commit s-s2" cx="370" cy="130" r="8"/>
+  <circle class="commit s-s3" cx="440" cy="70" r="8"/>
+  <circle class="commit s-s3" cx="490" cy="70" r="8"/>
+
+  <text x="130" y="274" text-anchor="middle" class="cid">base</text>
+  <text x="200" y="214" text-anchor="middle" class="cid">c1</text>
+  <text x="250" y="214" text-anchor="middle" class="cid">c2</text>
+  <text x="320" y="154" text-anchor="middle" class="cid">c3</text>
+  <text x="370" y="154" text-anchor="middle" class="cid">c4</text>
+  <text x="440" y="94" text-anchor="middle" class="cid">c5</text>
+  <text x="490" y="94" text-anchor="middle" class="cid">c6</text>
+
+  <text x="545" y="255" class="f-main">trunk</text>
+  <text x="545" y="188" class="f-s1">cart/discount-codes</text>
+  <text x="545" y="206" class="pr">PR #1 → trunk</text>
+  <text x="545" y="128" class="f-s2">cart/discount-api</text>
+  <text x="545" y="146" class="pr">PR #2 → cart/discount-codes</text>
+  <text x="545" y="68" class="f-s3">cart/discount-ui</text>
+  <text x="545" y="86" class="pr">PR #3 → cart/discount-api</text>
+</svg>
