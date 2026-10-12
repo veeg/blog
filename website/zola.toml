@@ -8,6 +8,8 @@ generate_feeds = false
 
 [markdown]
 insert_anchor_links = "left"
+# List footnotes at the bottom in reference order; static/style.css gives them symbols.
+bottom_footnotes = true
 
 [markdown.highlighting]
 dark_theme = "kanagawa-wave"
@@ -17,3 +19,5 @@ error_on_missing_language = true
 [extra]
 author = "Vegard Sandengen"
 github = "veeg"
+# How many posts the "Recent posts" sidebar lists.
+recent_posts = 5
